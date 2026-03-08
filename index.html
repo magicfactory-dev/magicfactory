@@ -523,6 +523,7 @@
   </footer>
   <script>
   (() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const NS = 'http://www.w3.org/2000/svg';
     const container = document.getElementById('star-fountain');
     const ORIGIN_X = 956, ORIGIN_Y = 132;
