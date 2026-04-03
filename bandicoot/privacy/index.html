@@ -187,28 +187,32 @@
 
     <header>
       <h1>Privacy Policy</h1>
-      <p class="updated">Updated March 13, 2026</p>
-      <p>Bandicoot is a word game made by <a href="https://magicfactory.dev">Magic Factory</a>. We collect only what's needed to make the game work.</p>
+      <p class="updated">Updated April 3, 2026</p>
+      <p>Bandicoot is a word game made by <a href="https://magicfactory.dev">Magic Factory</a>. You can play without an account. We collect only what's needed to make the game work.</p>
     </header>
 
     <section>
       <h2>Data We Collect</h2>
       <dl>
         <div>
-          <dt>Anonymous ID</dt>
-          <dd>Created automatically so your game progress is saved.</dd>
+          <dt>Anonymous player ID</dt>
+          <dd>Created automatically via Supabase anonymous auth to save your game progress.</dd>
         </div>
         <div>
-          <dt>Email</dt>
-          <dd>Only if you link your account via magic link. Used solely for authentication.</dd>
+          <dt>Email address</dt>
+          <dd>Only if you optionally link your account for cross-device sync. Used solely for authentication via magic link.</dd>
         </div>
         <div>
-          <dt>Display name &amp; location</dt>
-          <dd>Optional fields you can set for the leaderboard.</dd>
+          <dt>Display name</dt>
+          <dd>Shown on leaderboards. You choose what to display.</dd>
         </div>
         <div>
-          <dt>Game data</dt>
-          <dd>Scores, history, and statistics tied to your account.</dd>
+          <dt>Game scores &amp; stats</dt>
+          <dd>Submitted to the server for leaderboards, streaks, and personal statistics.</dd>
+        </div>
+        <div>
+          <dt>Game history</dt>
+          <dd>Words found, scores, mode played, and timestamps.</dd>
         </div>
       </dl>
     </section>
@@ -219,6 +223,7 @@
         <li>Save your progress and sync across devices</li>
         <li>Display leaderboard rankings</li>
         <li>Authenticate your account if you sign in</li>
+        <li>Local notifications are optional and processed entirely on-device</li>
       </ul>
     </section>
 
@@ -227,19 +232,29 @@
       <dl>
         <div>
           <dt>Supabase</dt>
-          <dd>Hosts our game and player database. <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
+          <dd>Backend database and authentication. <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div>
+          <dt>Sentry</dt>
+          <dd>Crash and error reporting. Captures device info, OS version, and error context — no personal data. <a href="https://sentry.io/privacy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div>
+          <dt>Apple Game Center</dt>
+          <dd>Leaderboards and achievements. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</dd>
         </div>
       </dl>
     </section>
 
     <section>
-      <h2>Data Sharing</h2>
-      <p>We do not sell, trade, or share your personal data with third parties. We do not serve ads.</p>
-    </section>
-
-    <section>
-      <h2>Tracking</h2>
-      <p>Bandicoot does not track you across other companies' apps or websites. We do not use advertising identifiers or participate in ad networks.</p>
+      <h2>What We Don't Collect</h2>
+      <ul>
+        <li>No tracking or advertising</li>
+        <li>No data shared with third parties for marketing</li>
+        <li>No analytics beyond crash reporting</li>
+        <li>No cookies or cross-app tracking</li>
+        <li>No location data</li>
+        <li>No contacts or photos</li>
+      </ul>
     </section>
 
     <section>
@@ -249,12 +264,12 @@
 
     <section>
       <h2>Security</h2>
-      <p>Your data is stored securely via Supabase. All communication uses HTTPS encryption.</p>
+      <p>Your data is stored securely via Supabase (US-hosted). All communication uses HTTPS encryption.</p>
     </section>
 
     <section>
       <h2>Your Rights</h2>
-      <p>You can update or delete your profile info at any time. To request full account deletion, email <a href="mailto:privacy@magicfactory.dev">privacy@magicfactory.dev</a>.</p>
+      <p>You can update or delete your profile info at any time. To request full account deletion, email <a href="mailto:support@magicfactory.dev">support@magicfactory.dev</a>.</p>
     </section>
 
     <section>
@@ -268,7 +283,7 @@
     </section>
 
     <section>
-      <p>Questions? <a href="mailto:privacy@magicfactory.dev">privacy@magicfactory.dev</a></p>
+      <p>Questions? <a href="mailto:support@magicfactory.dev">support@magicfactory.dev</a></p>
     </section>
   </main>
 </body>
