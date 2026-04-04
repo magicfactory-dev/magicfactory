@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy — Bandicoot</title>
-  <meta name="description" content="Privacy policy for Bandicoot, a word-digging puzzle game by Magic Factory.">
+  <title>Privacy Policy — Magic Factory</title>
+  <meta name="description" content="Privacy policy for Magic Factory and its products.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2312131f'/><rect x='6' y='6' width='27' height='27' rx='4' fill='%23fba4b8'/><rect x='37' y='6' width='27' height='27' rx='4' fill='%23fdc49a'/><rect x='67' y='6' width='27' height='27' rx='4' fill='%23fde07a'/><rect x='6' y='37' width='27' height='27' rx='4' fill='%23dca4f4'/><rect x='37' y='37' width='27' height='27' rx='4' fill='%23c8ccd6'/><rect x='67' y='37' width='27' height='27' rx='4' fill='%238eecc0'/><rect x='6' y='67' width='27' height='27' rx='4' fill='%23b8a4fe'/><rect x='37' y='67' width='27' height='27' rx='4' fill='%2396cffe'/><rect x='67' y='67' width='27' height='27' rx='4' fill='%23fba4b8'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -146,7 +146,7 @@
       color: var(--accent-green);
     }
 
-    /* --- rainbow divider --- */
+    /* --- rainbow divider (shared with main site) --- */
     .divider {
       height: 1px;
       margin: 0 0 3rem;
@@ -190,7 +190,7 @@
       margin-top: 0.75rem;
     }
 
-    /* --- cards --- */
+    /* --- cards for data items --- */
     .card-group {
       display: flex;
       flex-direction: column;
@@ -228,7 +228,7 @@
       color: var(--accent-green);
     }
 
-    /* --- check list --- */
+    /* --- check list (what we don't do) --- */
     .check-list {
       list-style: none;
       padding: 0;
@@ -255,31 +255,6 @@
       border-radius: 50%;
       background: var(--accent-green);
       opacity: 0.5;
-    }
-
-    /* --- simple list --- */
-    .simple-list {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
-    }
-
-    .simple-list li {
-      font-size: 0.9375rem;
-      line-height: 1.75;
-      color: var(--text-body);
-      padding-left: 1rem;
-      position: relative;
-    }
-
-    .simple-list li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--text-dim);
-      font-size: 0.75rem;
     }
 
     /* --- contact line --- */
@@ -338,16 +313,16 @@
 <body>
   <main>
     <nav>
-      <a href="/bandicoot">
+      <a href="/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
-        Bandicoot
+        Magic Factory
       </a>
     </nav>
 
     <header>
       <p class="page-label">Privacy Policy</p>
-      <h1>Play without worry.<br>Your data stays yours.</h1>
-      <p class="intro">Bandicoot is a word game made by <a href="/">Magic Factory</a>. You can play without an account. We collect only what's needed to make the game work.</p>
+      <h1>Your data is none of our business.</h1>
+      <p class="intro">Magic Factory, LLC builds apps and games. This policy covers our website at magicfactory.dev. Individual products like <a href="/bandicoot/privacy">Bandicoot</a> have their own privacy policies.</p>
     </header>
 
     <div class="divider"></div>
@@ -357,85 +332,36 @@
       <ul class="check-list">
         <li>No tracking</li>
         <li>No advertising</li>
-        <li>No analytics beyond crashes</li>
+        <li>No analytics</li>
         <li>No cookies</li>
         <li>No location data</li>
-        <li>No contacts or photos</li>
+        <li>No data sales</li>
       </ul>
     </section>
 
     <section>
-      <h2>Data We Collect</h2>
+      <h2>Data We Do Collect</h2>
       <dl class="card-group">
         <div class="card">
-          <dt>Anonymous player ID</dt>
-          <dd>Created automatically via Supabase anonymous auth to save your game progress.</dd>
-        </div>
-        <div class="card">
-          <dt>Email address</dt>
-          <dd>Only if you optionally link your account for cross-device sync. Used solely for authentication via magic link.</dd>
-        </div>
-        <div class="card">
-          <dt>Display name</dt>
-          <dd>Shown on leaderboards. You choose what to display.</dd>
-        </div>
-        <div class="card">
-          <dt>Game scores &amp; stats</dt>
-          <dd>Submitted to the server for leaderboards, streaks, and personal statistics.</dd>
-        </div>
-        <div class="card">
-          <dt>Game history</dt>
-          <dd>Words found, scores, mode played, and timestamps.</dd>
+          <dt>Contact form</dt>
+          <dd>If you reach out via our contact form, we receive your name, email, and message. This is processed by Formspree and delivered to us by email. We use it only to respond to you.</dd>
         </div>
       </dl>
-    </section>
-
-    <section>
-      <h2>How We Use It</h2>
-      <ul class="simple-list">
-        <li>Save your progress and sync across devices</li>
-        <li>Display leaderboard rankings</li>
-        <li>Authenticate your account if you sign in</li>
-        <li>Local notifications are optional and processed entirely on-device</li>
-      </ul>
     </section>
 
     <section>
       <h2>Third-Party Services</h2>
       <dl class="card-group">
         <div class="card">
-          <dt>Supabase</dt>
-          <dd>Backend database and authentication. <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
-        </div>
-        <div class="card">
-          <dt>Sentry</dt>
-          <dd>Crash and error reporting. Captures device info, OS version, and error context — no personal data. <a href="https://sentry.io/privacy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
-        </div>
-        <div class="card">
-          <dt>Apple Game Center</dt>
-          <dd>Leaderboards and achievements. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</dd>
+          <dt>Formspree</dt>
+          <dd>Processes contact form submissions. <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
         </div>
       </dl>
     </section>
 
     <section>
-      <h2>Data Retention</h2>
-      <p>We keep your data for as long as your account exists. If you request account deletion, we will delete your data within 30 days.</p>
-    </section>
-
-    <section>
-      <h2>Security</h2>
-      <p>Your data is stored securely via Supabase (US-hosted). All communication uses HTTPS encryption.</p>
-    </section>
-
-    <section>
-      <h2>Your Rights</h2>
-      <p>You can update or delete your profile info at any time. To request full account deletion, email <a href="mailto:support@magicfactory.dev" style="color:var(--accent-blue);text-decoration:none;font-weight:600;">support@magicfactory.dev</a>.</p>
-    </section>
-
-    <section>
       <h2>Children</h2>
-      <p>Bandicoot does not knowingly collect personal information from children under 13. The game can be played without providing any personal info.</p>
+      <p>We do not knowingly collect personal information from children under 13.</p>
     </section>
 
     <section>
