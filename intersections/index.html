@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intersections — A Daily Word Puzzle | Magic Factory</title>
+  <meta name="description" content="Intersections is a daily word puzzle. Place nine words on a 3×3 grid where every word must fit its row and column category. Coming Spring 2026.">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23faf9f6' stroke='%231a1a1a' stroke-width='6'/><line x1='34' y1='10' x2='34' y2='90' stroke='%231a1a1a' stroke-width='3'/><line x1='66' y1='10' x2='66' y2='90' stroke='%231a1a1a' stroke-width='3'/><line x1='10' y1='34' x2='90' y2='34' stroke='%231a1a1a' stroke-width='3'/><line x1='10' y1='66' x2='90' y2='66' stroke='%231a1a1a' stroke-width='3'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #faf9f6;
+      --ink: #1a1a1a;
+      --text: #2e2e2e;
+      --muted: #717171;
+      --light: #c5c5c5;
+      --border: #1a1a1a;
+      --shadow: #1a1a1a;
+      --card-bg: #ffffff;
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- nav --- */
+    nav {
+      padding: 1.5rem clamp(1.25rem, 5vw, 2rem);
+      animation: fadeIn 0.6s ease-out both;
+    }
+
+    nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+    }
+
+    nav a svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* --- main --- */
+    main {
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 3vh clamp(1.25rem, 5vw, 2rem) 4rem;
+      text-align: center;
+      flex: 1;
+    }
+
+    /* --- logo --- */
+    .logo {
+      margin-bottom: 1.75rem;
+      animation: fadeIn 0.6s ease-out both;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(2.5rem, 8vw, 3.75rem);
+      color: var(--ink);
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+    }
+
+    /* --- grid illustration --- */
+    .grid-wrap {
+      margin: 0 auto 2.25rem;
+      animation: fadeIn 0.6s ease-out 0.1s both;
+    }
+
+    .grid-demo {
+      width: 192px;
+      height: 192px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 3px solid var(--border);
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+
+    .cell {
+      aspect-ratio: 1;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--card-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6875rem;
+      color: var(--light);
+      user-select: none;
+    }
+
+    .cell.filled {
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .cell.tint-violet { background: #eeeafc; }
+    .cell.tint-blue   { background: #e8f2ff; }
+    .cell.tint-green  { background: #e6f9f0; }
+
+    /* --- tagline --- */
+    .tagline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.125rem, 3vw, 1.3125rem);
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 0.625rem;
+      animation: fadeIn 0.6s ease-out 0.15s both;
+    }
+
+    .release {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeIn 0.6s ease-out 0.2s both;
+    }
+
+    /* --- rule --- */
+    .rule {
+      width: 48px;
+      height: 2px;
+      background: var(--ink);
+      margin: 2.25rem auto;
+      animation: fadeIn 0.6s ease-out 0.22s both;
+    }
+
+    /* --- description --- */
+    .description {
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      color: var(--ink);
+      max-width: 440px;
+      margin: 0 auto 2.5rem;
+      text-align: left;
+      text-wrap: pretty;
+      animation: fadeIn 0.6s ease-out 0.25s both;
+    }
+
+    /* --- mode cards --- */
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      animation: fadeIn 0.6s ease-out 0.3s both;
+    }
+
+    .mode {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      box-shadow: 4px 4px 0 var(--shadow);
+      padding: 1.125rem 1rem 1.25rem;
+      text-align: left;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+    }
+
+    .mode::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    .mode:nth-child(1) { --accent: #b8a4fe; }
+    .mode:nth-child(2) { --accent: #96cffe; }
+    .mode:nth-child(3) { --accent: #8eecc0; }
+
+    .mode:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--shadow);
+    }
+
+    .mode-name {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
+    }
+
+    .mode-desc {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    /* --- footer --- */
+    footer {
+      text-align: center;
+      padding: 4rem 1.5rem 2.5rem;
+      animation: fadeIn 0.6s ease-out 0.35s both;
+    }
+
+    footer small {
+      color: var(--muted);
+      font-size: 0.8125rem;
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: var(--ink);
+    }
+
+    /* --- animations --- */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .modes {
+        grid-template-columns: 1fr;
+      }
+      .grid-demo {
+        width: 156px;
+        height: 156px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Magic Factory
+    </a>
+  </nav>
+
+  <main>
+    <div class="logo">
+      <h1>Intersections</h1>
+    </div>
+
+    <div class="grid-wrap">
+      <div class="grid-demo">
+        <div class="cell tint-violet">&mdash;</div>
+        <div class="cell filled">oak</div>
+        <div class="cell">&mdash;</div>
+        <div class="cell">&mdash;</div>
+        <div class="cell tint-blue">&mdash;</div>
+        <div class="cell filled">rain</div>
+        <div class="cell filled">cold</div>
+        <div class="cell">&mdash;</div>
+        <div class="cell tint-green">&mdash;</div>
+      </div>
+    </div>
+
+    <p class="tagline">A daily puzzle about what belongs where</p>
+    <p class="release">Coming Spring 2026</p>
+
+    <div class="rule"></div>
+
+    <p class="description">Nine words. A 3&times;3 grid. Each row and each column has a hidden category&thinsp;&mdash;&thinsp;figure out which word belongs in every cell. One puzzle a day, with leaderboards and streaks.</p>
+
+    <div class="modes">
+      <div class="mode">
+        <div class="mode-name">Grid</div>
+        <div class="mode-desc">Nine words, 3&times;3 categories</div>
+      </div>
+      <div class="mode">
+        <div class="mode-name">Deduction</div>
+        <div class="mode-desc">Logic meets vocabulary</div>
+      </div>
+      <div class="mode">
+        <div class="mode-name">Daily</div>
+        <div class="mode-desc">One new puzzle every day</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <small>&copy; 2026 Magic Factory, LLC &middot; <a href="/privacy">Privacy</a></small>
+  </footer>
+</body>
+</html>

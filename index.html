@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Factory — People and machines can do magical things.</title>
-  <meta name="description" content="People and machines can do magical things. Magic Factory makes games, starting with Bandicoot — a word-digging puzzle game.">
+  <meta name="description" content="People and machines can do magical things. Magic Factory makes games — Bandicoot, a word-digging puzzle, and Intersections, a daily word puzzle. Both coming Spring 2026.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2312131f'/><rect x='6' y='6' width='27' height='27' rx='4' fill='%23fba4b8'/><rect x='37' y='6' width='27' height='27' rx='4' fill='%23fdc49a'/><rect x='67' y='6' width='27' height='27' rx='4' fill='%23fde07a'/><rect x='6' y='37' width='27' height='27' rx='4' fill='%23dca4f4'/><rect x='37' y='37' width='27' height='27' rx='4' fill='%23c8ccd6'/><rect x='67' y='37' width='27' height='27' rx='4' fill='%238eecc0'/><rect x='6' y='67' width='27' height='27' rx='4' fill='%23b8a4fe'/><rect x='37' y='67' width='27' height='27' rx='4' fill='%2396cffe'/><rect x='67' y='67' width='27' height='27' rx='4' fill='%23fba4b8'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,6 +240,10 @@
       transform: translateX(3px);
     }
 
+    .product + .divider + .product {
+      animation-delay: 0.45s;
+    }
+
     .contact {
       max-width: 420px;
       margin: 4rem auto 0;
@@ -332,22 +336,19 @@
       animation: fadeIn 0.9s ease-out 0.45s both;
     }
 
+    footer small {
+      color: var(--text-dim);
+      font-size: 0.8125rem;
+    }
+
     footer a {
-      font-size: 0.9375rem;
-      color: var(--accent-blue);
+      color: var(--text-dim);
       text-decoration: none;
       transition: color 0.3s ease;
     }
 
     footer a:hover {
-      color: var(--accent-green);
-    }
-
-    footer small {
-      display: block;
-      margin-top: 0.625rem;
-      color: var(--text-dim);
-      font-size: 0.8125rem;
+      color: var(--text-body);
     }
 
     @keyframes fadeIn {
@@ -497,6 +498,38 @@
       <a href="/bandicoot" class="product-link">Learn more <span>&rarr;</span></a>
     </div>
 
+    <div class="divider"></div>
+
+    <div class="product">
+      <div class="product-header">
+      <a href="/intersections" class="product-logo">
+        <svg viewBox="0 0 420 52" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="tg" x1="0" y1="26" x2="420" y2="26" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#b8a4fe"/>
+              <stop offset="25%" stop-color="#96cffe"/>
+              <stop offset="50%" stop-color="#8eecc0"/>
+              <stop offset="75%" stop-color="#96cffe"/>
+              <stop offset="100%" stop-color="#b8a4fe"/>
+            </linearGradient>
+          </defs>
+          <text
+            x="0" y="40"
+            font-family="Unbounded, sans-serif"
+            font-weight="800"
+            font-size="34"
+            fill="url(#tg)"
+            letter-spacing="-1"
+          >Intersections</text>
+        </svg>
+      </a>
+      </div>
+
+      <p class="product-label">A word puzzle about what belongs where</p>
+      <p>Place nine words on a 3&times;3 grid. Each row and each column has a hidden category — figure out which word belongs in every cell. One new puzzle every day.</p>
+      <a href="/intersections" class="product-link">Learn more <span>&rarr;</span></a>
+    </div>
+
     <div class="contact">
       <h2>Get in touch</h2>
       <p style="text-align:center; margin-bottom:1.75rem; font-size:0.8125rem; color:var(--text-dim); letter-spacing:0.02em;">We'd love to hear from you</p>
@@ -519,7 +552,7 @@
   </main>
 
   <footer>
-    <small>&copy; 2026 Magic Factory, LLC</small>
+    <small>&copy; 2026 Magic Factory, LLC &middot; <a href="/privacy">Privacy</a></small>
   </footer>
   <script>
   (() => {
