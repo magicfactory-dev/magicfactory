@@ -355,12 +355,10 @@
     <section>
       <h2>What We Don't Collect</h2>
       <ul class="check-list">
-        <li>No tracking</li>
         <li>No advertising</li>
-        <li>No analytics beyond crashes</li>
-        <li>No cookies</li>
         <li>No location data</li>
         <li>No contacts or photos</li>
+        <li>No third-party ad tracking</li>
       </ul>
     </section>
 
@@ -412,8 +410,24 @@
           <dd>Crash and error reporting. Captures device info, OS version, and error context — no personal data. <a href="https://sentry.io/privacy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
         </div>
         <div class="card">
+          <dt>PostHog</dt>
+          <dd>Product analytics to understand how the game is used — feature usage, game events, and conversion funnels. No personal data is shared. Analytics traffic is proxied through Cloudflare. <a href="https://posthog.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
+          <dt>Cloudflare</dt>
+          <dd>Used as a reverse proxy for analytics traffic. Cloudflare may process request metadata (IP address, headers) in transit. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
+          <dt>Stripe</dt>
+          <dd>Payment processing for premium upgrades. Stripe handles all payment data directly — we never see or store your card details. <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
           <dt>Apple Game Center</dt>
-          <dd>Leaderboards and achievements. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</dd>
+          <dd>Leaderboards and achievements on iOS. Governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</dd>
+        </div>
+        <div class="card">
+          <dt>Google Play Games</dt>
+          <dd>Leaderboards and achievements on Android. Governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</dd>
         </div>
       </dl>
     </section>
@@ -430,7 +444,7 @@
 
     <section>
       <h2>Your Rights</h2>
-      <p>You can update or delete your profile info at any time. To request full account deletion, email <a href="mailto:support@magicfactory.dev" style="color:var(--accent-blue);text-decoration:none;font-weight:600;">support@magicfactory.dev</a>.</p>
+      <p>You can update or delete your profile info at any time. To delete your account and all associated data, go to Settings → Delete Account inside the app. You can also request deletion by emailing <a href="mailto:support@magicfactory.dev" style="color:var(--accent-blue);text-decoration:none;font-weight:600;">support@magicfactory.dev</a>.</p>
     </section>
 
     <section>
@@ -445,7 +459,7 @@
 
     <div class="contact-line">
       <p>Questions? <a href="mailto:support@magicfactory.dev">support@magicfactory.dev</a></p>
-      <p class="updated">Updated April 3, 2026</p>
+      <p class="updated">Updated April 4, 2026</p>
     </div>
   </main>
 </body>
