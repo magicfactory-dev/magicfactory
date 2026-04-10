@@ -4,356 +4,547 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bandicoot — A Word-Digging Puzzle Game | Magic Factory</title>
-  <meta name="description" content="Bandicoot is a word-digging puzzle game. Swipe to connect letters on a 6x6 grid, spell words, and clear tiles. Coming Spring 2026.">
+  <meta name="description" content="Bandicoot is a word-digging puzzle game. Connect letters on a 6×6 grid, spell words, and clear tiles. 5 modes, daily challenges, no ads. Free on iOS and Android.">
+  <meta property="og:title" content="Bandicoot — A Word-Digging Puzzle Game">
+  <meta property="og:description" content="Connect letters, clear tiles, chase the perfect game. 5 modes, daily challenges, no ads.">
+  <meta property="og:image" content="https://bandicoot.fun/og-image.png">
+  <meta property="og:url" content="https://bandicoot.fun">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2312131f'/><rect x='6' y='6' width='27' height='27' rx='4' fill='%23fba4b8'/><rect x='37' y='6' width='27' height='27' rx='4' fill='%23fdc49a'/><rect x='67' y='6' width='27' height='27' rx='4' fill='%23fde07a'/><rect x='6' y='37' width='27' height='27' rx='4' fill='%23dca4f4'/><rect x='37' y='37' width='27' height='27' rx='4' fill='%23c8ccd6'/><rect x='67' y='37' width='27' height='27' rx='4' fill='%238eecc0'/><rect x='6' y='67' width='27' height='27' rx='4' fill='%23b8a4fe'/><rect x='37' y='67' width='27' height='27' rx='4' fill='%2396cffe'/><rect x='67' y='67' width='27' height='27' rx='4' fill='%23fba4b8'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg: #0e0f18;
-      --text-primary: #eae7df;
+      --surface: #16172a;
+      --text: #eae7df;
       --text-body: #9f9bae;
       --text-dim: #5c5872;
-      --accent-blue: #96cffe;
-      --accent-green: #8eecc0;
+      --pink: #fba4b8;
+      --orange: #fdc49a;
+      --gold: #fde07a;
+      --green: #8eecc0;
+      --blue: #96cffe;
+      --violet: #b8a4fe;
+      --orchid: #dca4f4;
     }
 
-    html {
-      background: var(--bg);
-      overflow-x: hidden;
-    }
+    html { background: var(--bg); }
 
     body {
       font-family: 'DM Sans', -apple-system, sans-serif;
       color: var(--text-body);
       background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
       overflow-x: hidden;
     }
 
-    nav {
-      padding: 1.5rem;
-      animation: fadeIn 0.9s ease-out both;
+    /* Ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(184,164,254,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(251,164,184,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(142,236,192,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
     }
 
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Nav ── */
+    nav {
+      padding: 1.5rem;
+      animation: fadeUp 0.6s ease-out both;
+    }
     nav a {
-      font-family: 'Unbounded', sans-serif;
-      font-weight: 800;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
       font-size: 0.75rem;
       color: var(--text-dim);
       text-decoration: none;
-      transition: color 0.3s ease;
-      display: inline-flex;
-      align-items: baseline;
+      transition: color 0.3s;
     }
+    nav a:hover { color: var(--text-body); }
 
-    nav a:hover {
-      color: var(--text-body);
-    }
-
-    nav .arrow {
-      margin-right: 0.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 400;
-    }
-
-    nav .star-i {
-      position: relative;
-      display: inline-block;
-    }
-    nav .star-i .i-stem {
-      display: inline-block;
-      clip-path: inset(35% 0 0 0);
-    }
-    nav .star-i svg.star {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    nav .gear-o {
-      display: inline-block;
-      vertical-align: baseline;
-      position: relative;
-      width: 0.76em;
-      height: 0.76em;
-      margin: 0 0.02em;
-      top: 0.09em;
-    }
-    nav .gear-o svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    main {
-      width: 100%;
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 6vh clamp(1rem, 5vw, 1.5rem) 4rem;
+    /* ── Hero ── */
+    .hero {
       text-align: center;
-      flex: 1;
+      padding: 4rem 0 3rem;
+      animation: fadeUp 0.6s ease-out 0.1s both;
     }
 
-    .logo-area {
-      margin-bottom: 3rem;
-      animation: fadeIn 0.9s ease-out both;
-    }
-
-    .product-icon {
-      width: 80px;
-      height: 80px;
+    .hero-icon {
+      width: 96px;
+      height: 96px;
       margin: 0 auto 2rem;
-      border-radius: 18px;
+      border-radius: 22px;
       overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 40px rgba(184,164,254,0.15), 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .hero-icon svg { display: block; width: 100%; height: 100%; }
+
+    .hero-title {
+      margin-bottom: 0.75rem;
     }
 
-    .product-icon svg {
-      width: 100%;
-      height: 100%;
+    .logotype {
       display: block;
-    }
-
-    .product-logo {
-      width: min(320px, 80vw);
       margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .product-logo svg {
-      width: 100%;
+      width: clamp(240px, 60vw, 340px);
       height: auto;
-      display: block;
     }
 
-    .divider {
-      height: 1px;
-      max-width: 200px;
-      margin: 0 auto 3rem;
-      background: linear-gradient(90deg, transparent, #fba4b8, #fdc49a, #fde07a, #8eecc0, #96cffe, #b8a4fe, #dca4f4, transparent);
-      background-size: 200% 100%;
-      animation: shimmer 8s linear infinite, fadeIn 0.9s ease-out 0.15s both;
-    }
-
-    @keyframes shimmer {
-      0% { background-position: 0% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    .content {
-      animation: fadeIn 0.9s ease-out 0.3s both;
-    }
-
-    .content h2 {
-      font-family: 'Unbounded', sans-serif;
-      font-size: clamp(1.25rem, 3.5vw, 1.75rem);
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.02em;
+    .hero-tagline {
+      font-size: 1.125rem;
+      color: var(--text-dim);
+      font-weight: 500;
       margin-bottom: 1.5rem;
     }
 
-    .release-date {
-      font-family: 'Unbounded', sans-serif;
-      font-weight: 800;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-      text-align: center;
+    .hero-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-body);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
     }
 
-    .content p {
-      font-size: clamp(0.9375rem, 2.5vw, 1.0625rem);
-      line-height: 1.8;
-      max-width: 520px;
-      margin: 0 auto 2rem;
-      text-align: left;
-      text-wrap: pretty;
+    /* ── Store Badges ── */
+    .store-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .store-badge:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.15);
+    }
+    .store-badge svg { width: 20px; height: 20px; }
+    .store-badge-sub {
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      display: block;
+      line-height: 1;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(184,164,254,0.3), rgba(142,236,192,0.3), transparent);
+      margin: 0 auto;
+      max-width: 300px;
+      border-radius: 1px;
+    }
+
+    /* ── Features ── */
+    .features {
+      padding: 4rem 0;
+      animation: fadeUp 0.6s ease-out 0.2s both;
+    }
+
+    .section-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin-bottom: 2rem;
     }
 
     .modes {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
-      gap: 0.75rem;
-      max-width: 480px;
-      margin: 2.5rem auto 0;
-      text-align: left;
+      gap: 1rem;
     }
 
     .mode {
-      padding: 1rem 1.25rem;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.05);
+      padding: 1.25rem 1.5rem;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.04);
       border-left: 3px solid var(--mode-color, rgba(255,255,255,0.1));
+      transition: border-color 0.2s;
     }
-
-    .mode:nth-child(1) { --mode-color: rgb(251, 164, 164); }  /* Blitz - spring-pink */
-    .mode:nth-child(2) { --mode-color: rgb(253, 186, 116); }  /* Focus - spring-orange */
-    .mode:nth-child(3) { --mode-color: rgb(253, 224, 122); }  /* Root - spring-gold */
-    .mode:nth-child(4) { --mode-color: rgb(142, 236, 192); }  /* Flow - spring-green */
-    .mode:nth-child(5) { --mode-color: rgb(184, 164, 254); }  /* Daily - spring-violet */
+    .mode:hover { border-left-color: var(--mode-color); }
 
     .mode-name {
-      font-weight: 600;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
       font-size: 0.9375rem;
       color: var(--mode-color);
       margin-bottom: 0.25rem;
     }
-
     .mode-desc {
       font-size: 0.8125rem;
       line-height: 1.5;
       color: var(--text-dim);
     }
-
-    footer {
-      text-align: center;
-      padding: 4rem 1.5rem 2.5rem;
-      animation: fadeIn 0.9s ease-out 0.45s both;
+    .mode-free {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      background: rgba(142,236,192,0.12);
+      color: var(--green);
+      margin-left: 0.5rem;
+      vertical-align: middle;
     }
 
+    .mode:nth-child(1) { --mode-color: var(--violet); }
+    .mode:nth-child(2) { --mode-color: var(--pink); }
+    .mode:nth-child(3) { --mode-color: var(--green); }
+    .mode:nth-child(4) { --mode-color: var(--orange); }
+    .mode:nth-child(5) { --mode-color: var(--gold); }
+
+    .gold-note {
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+      font-style: italic;
+    }
+    .gold-note strong {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ── Highlights ── */
+    .highlights {
+      padding: 2rem 0 4rem;
+      animation: fadeUp 0.6s ease-out 0.3s both;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .highlight {
+      padding: 1.5rem;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.04);
+      text-align: center;
+    }
+    .highlight-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .highlight-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .highlight-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── Email Signup ── */
+    .signup {
+      padding: 3rem 0;
+      text-align: center;
+      animation: fadeUp 0.6s ease-out 0.35s both;
+    }
+
+    .signup h2 {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .signup-sub {
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .signup-form input[type="email"] {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .signup-form input[type="email"]::placeholder {
+      color: var(--text-dim);
+    }
+    .signup-form input[type="email"]:focus {
+      border-color: rgba(184,164,254,0.4);
+    }
+
+    .signup-form button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      border: none;
+      background: rgba(184, 164, 254, 0.9);
+      color: #0e0f18;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .signup-form button:hover { background: rgba(184, 164, 254, 1); }
+
+    .signup-fine {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 0.75rem;
+    }
+    .signup-fine a {
+      color: var(--text-dim);
+      text-decoration: underline;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      animation: fadeUp 0.6s ease-out 0.4s both;
+    }
     footer small {
       color: var(--text-dim);
       font-size: 0.8125rem;
     }
-
     footer a {
       color: var(--text-dim);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: color 0.3s;
+    }
+    footer a:hover { color: var(--text-body); }
+    .footer-links {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      font-size: 0.8125rem;
     }
 
-    footer a:hover {
-      color: var(--text-body);
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
       }
     }
+
+    @media (max-width: 480px) {
+      .highlight-grid { grid-template-columns: 1fr; }
+      .signup-form { flex-direction: column; }
+      .store-badges { flex-direction: column; align-items: center; }
+    }
   </style>
+  <!-- TikTok Pixel Code Start -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D7C3CDRC77U88C4ABRAG');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
 </head>
 <body>
   <nav>
-    <a href="/"><span class="arrow">&larr;</span><span>Mag</span><span class="star-i"><svg class="star" width="10" height="10" viewBox="0 0 20 20" style="top:-3px;"><polygon points="10,20 12.4,13.1 19.5,13.1 13.5,9 15.9,2 10,6.2 4.1,2 6.5,9 0.5,13.1 7.6,13.1" fill="currentColor"/></svg><span class="i-stem">i</span></span><span>c&nbsp;Fact</span><span class="gear-o"><svg viewBox="0 0 50 50"><g transform="translate(25,25)"><g fill="currentColor"><rect x="-4" y="-23" width="8" height="7" rx="1.5"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(45)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(90)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(135)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(180)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(225)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(270)"/><rect x="-4" y="-23" width="8" height="7" rx="1.5" transform="rotate(315)"/></g><circle cx="0" cy="0" r="17" fill="currentColor"/><circle cx="0" cy="0" r="5.5" fill="var(--bg)"/></g></svg></span><span>ry</span></a>
+    <a href="/">&larr; Magic Factory</a>
   </nav>
 
-  <main>
-    <div class="logo-area">
-      <div class="product-icon">
+  <div class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <defs>
-            <clipPath id="bc-clip">
-              <rect width="512" height="512" rx="88"/>
-            </clipPath>
-          </defs>
-          <g clip-path="url(#bc-clip)">
-            <rect width="512" height="512" fill="#12131f"/>
-            <rect x="30" y="30" width="140" height="140" rx="22" fill="#fba4b8"/>
-            <rect x="186" y="30" width="140" height="140" rx="22" fill="#fdc49a"/>
-            <rect x="342" y="30" width="140" height="140" rx="22" fill="#fde07a"/>
-            <rect x="30" y="186" width="140" height="140" rx="22" fill="#dca4f4"/>
-            <rect x="186" y="186" width="140" height="140" rx="22" fill="#c8ccd6"/>
-            <rect x="342" y="186" width="140" height="140" rx="22" fill="#8eecc0"/>
-            <rect x="30" y="342" width="140" height="140" rx="22" fill="#b8a4fe"/>
-            <rect x="186" y="342" width="140" height="140" rx="22" fill="#96cffe"/>
-            <rect x="342" y="342" width="140" height="140" rx="22" fill="#fba4b8"/>
-          </g>
+          <rect width="512" height="512" rx="88" fill="#12131f"/>
+          <rect x="30" y="30" width="140" height="140" rx="22" fill="#fba4b8"/>
+          <rect x="186" y="30" width="140" height="140" rx="22" fill="#fdc49a"/>
+          <rect x="342" y="30" width="140" height="140" rx="22" fill="#fde07a"/>
+          <rect x="30" y="186" width="140" height="140" rx="22" fill="#dca4f4"/>
+          <rect x="186" y="186" width="140" height="140" rx="22" fill="#c8ccd6"/>
+          <rect x="342" y="186" width="140" height="140" rx="22" fill="#8eecc0"/>
+          <rect x="30" y="342" width="140" height="140" rx="22" fill="#b8a4fe"/>
+          <rect x="186" y="342" width="140" height="140" rx="22" fill="#96cffe"/>
+          <rect x="342" y="342" width="140" height="140" rx="22" fill="#fba4b8"/>
         </svg>
       </div>
 
-      <div class="product-logo">
-        <svg viewBox="-6 -10 286 120" xmlns="http://www.w3.org/2000/svg" style="overflow:hidden">
-          <defs>
-            <linearGradient id="g" x1="0" y1="65" x2="310" y2="65" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#fba4b8"/>
-              <stop offset="15%" stop-color="#fdc49a"/>
-              <stop offset="30%" stop-color="#fde07a"/>
-              <stop offset="45%" stop-color="#8eecc0"/>
-              <stop offset="60%" stop-color="#96cffe"/>
-              <stop offset="75%" stop-color="#b8a4fe"/>
-              <stop offset="90%" stop-color="#dca4f4"/>
-              <stop offset="100%" stop-color="#fba4b8"/>
-            </linearGradient>
-          </defs>
-          <path
-            d="M33.59 49.22L33.59 49.22Q33.59 52.25 32.93 55.47Q32.28 58.69 30.88 61.67Q29.49 64.65 27.34 67.14Q25.20 69.63 22.22 71.19L22.22 71.19Q25.10 72.46 26.78 74.37Q28.47 76.27 29.35 78.30Q30.22 80.32 30.47 82.15Q30.71 83.98 30.71 85.11L30.71 85.11Q30.71 88.82 29.61 91.48Q28.52 94.14 26.81 95.97Q25.10 97.80 22.97 98.90Q20.85 100 18.77 100.59Q16.70 101.17 14.89 101.34Q13.09 101.51 12.01 101.51L12.01 101.51Q10.64 101.46 9.23 101.27L9.23 101.27Q8.01 101.07 6.62 100.71Q5.22 100.34 4.10 99.61L4.10 99.61Q4.39 90.33 4.39 81.10L4.39 81.10Q4.39 68.55 3.83 56.30Q3.27 44.04 2.20 31.59L2.20 31.59Q4.44 30.91 6.67 30.52Q8.89 30.13 10.69 29.93L10.69 29.93Q12.79 29.74 14.70 29.69L14.70 29.69Q16.21 29.69 18.19 30.05Q20.17 30.42 22.27 31.32Q24.37 32.23 26.39 33.67Q28.42 35.11 30.03 37.28Q31.64 39.45 32.62 42.41Q33.59 45.36 33.59 49.22ZM24.12 51.42L24.12 51.42Q24.12 51.46 24.12 50.56Q24.12 49.66 23.90 48.27Q23.68 46.88 23.17 45.21Q22.66 43.55 21.63 42.09Q20.61 40.63 18.97 39.53Q17.33 38.43 14.89 38.18L14.89 38.18Q14.60 46.24 14.33 54.25Q14.06 62.26 13.92 70.31L13.92 70.31Q15.67 69.68 17.07 68.51Q18.46 67.33 19.51 65.89Q20.56 64.45 21.29 62.82Q22.02 61.18 22.56 59.57L22.56 59.57Q23.78 55.81 24.12 51.42ZM21.39 83.79L21.39 83.79Q21.29 81.40 20.41 79.44L20.41 79.44Q20.02 78.61 19.48 77.76Q18.95 76.90 18.14 76.20Q17.33 75.49 16.26 74.98Q15.19 74.46 13.82 74.22L13.82 74.22Q13.67 79.35 13.57 84.40Q13.48 89.45 13.48 94.58L13.48 94.58Q14.94 94.04 16.06 93.29Q17.19 92.53 18.02 91.67Q18.85 90.82 19.41 89.89Q19.97 88.96 20.36 88.09L20.36 88.09Q21.24 86.04 21.39 83.79ZM65.50 68.90L65.50 68.90Q65.50 76.61 65.43 84.33Q65.36 92.04 65.11 100.39L65.11 100.39L56.62 99.90L56.62 93.31Q55.15 95.95 53.30 97.34Q51.44 98.73 49.78 99.41L49.78 99.41Q47.83 100.20 45.92 100.29L45.92 100.29Q43.58 100.29 41.53 99.24Q39.48 98.19 37.96 96.44Q36.45 94.68 35.60 92.41Q34.74 90.14 34.74 87.70L34.74 87.70Q34.74 84.91 35.94 82.20Q37.13 79.49 40.02 77.29L40.02 77.29Q43.87 74.32 46.71 72.31Q49.54 70.31 51.42 68.68Q53.30 67.04 54.20 65.55Q55.10 64.06 55.10 62.11L55.10 62.11Q55.10 58.89 54.03 57.30Q52.96 55.71 51.20 55.71L51.20 55.71Q50.12 55.71 49.37 56.27Q48.61 56.84 48.15 57.74Q47.68 58.64 47.46 59.74Q47.24 60.84 47.24 61.91L47.24 61.91Q47.24 62.65 47.32 63.53Q47.39 64.40 47.63 65.38L47.63 65.38L36.40 65.58Q36.30 64.75 36.26 63.99Q36.21 63.23 36.21 62.50L36.21 62.50Q36.21 59.47 37.23 56.52Q38.26 53.56 40.24 51.25Q42.21 48.93 45.04 47.51Q47.88 46.09 51.54 46.09L51.54 46.09Q56.28 46.09 59.03 48.07Q61.79 50.05 63.23 53.27Q64.67 56.49 65.09 60.57Q65.50 64.65 65.50 68.90ZM54.52 82.71L54.52 82.71Q54.76 81.49 54.96 79.93L54.96 79.93Q55.15 78.61 55.30 76.73Q55.45 74.85 55.54 72.51L55.54 72.51Q54.76 73.58 54.03 74.41Q53.30 75.24 52.66 75.88L52.66 75.88Q51.93 76.61 51.29 77.20L51.29 77.20Q50.17 78.13 48.90 79.27Q47.63 80.42 46.58 81.69Q45.53 82.96 44.83 84.30Q44.12 85.64 44.12 86.91L44.12 86.91Q44.12 88.28 45.04 89.43Q45.97 90.58 47.34 90.58L47.34 90.58Q48.37 90.58 49.46 89.99Q50.56 89.40 51.56 88.33Q52.56 87.26 53.35 85.84Q54.13 84.42 54.52 82.71ZM101.52 99.12L90.04 99.71Q91.12 91.85 91.58 83.79Q92.04 75.73 92.04 66.89L92.04 66.89Q92.04 63.92 91.65 62.13Q91.26 60.35 90.63 59.40Q89.99 58.45 89.26 58.18Q88.53 57.91 87.84 57.91L87.84 57.91Q86.87 57.91 86.01 58.25Q85.16 58.59 84.43 59.57Q83.69 60.55 83.08 62.30Q82.47 64.06 82.03 66.94Q81.59 69.82 81.37 73.95Q81.15 78.08 81.15 83.79L81.15 83.79Q81.15 85.84 81.15 88.06Q81.15 90.28 81.18 92.29Q81.20 94.29 81.23 95.83Q81.25 97.36 81.35 98.00L81.35 98.00L70.31 97.90Q70.46 93.46 70.53 89.97Q70.61 86.47 70.66 83.54Q70.71 80.62 70.73 78.05Q70.75 75.49 70.75 73.00L70.75 73.00Q70.75 70.75 70.73 68.38Q70.71 66.02 70.68 63.28Q70.66 60.55 70.58 57.30Q70.51 54.05 70.41 50.10L70.41 50.10L81.84 49.80L81.64 54.79Q82.96 52.29 84.47 50.81Q85.99 49.32 87.48 48.49Q88.97 47.66 90.38 47.39Q91.80 47.12 92.92 47.12L92.92 47.12Q95.95 47.12 97.90 49.22Q99.86 51.32 101.00 54.81Q102.15 58.30 102.59 62.79Q103.03 67.29 103.03 72.12L103.03 72.12Q103.03 75.63 102.86 79.25Q102.69 82.86 102.47 86.35Q102.25 89.84 101.98 93.09Q101.71 96.34 101.52 99.12L101.52 99.12ZM126.10 30.91L137.92 30.42L136.70 100.59L127.32 100.59L127.32 95.61Q125.91 97.71 124.59 98.85Q123.27 100 122.24 100.54L122.24 100.54Q121.02 101.17 120.00 101.32L120.00 101.32Q117.51 101.32 115.07 99.83Q112.63 98.34 110.70 94.87Q108.77 91.41 107.55 85.77Q106.33 80.13 106.33 71.78L106.33 71.78Q106.33 65.38 107.38 60.52Q108.43 55.66 110.18 52.39Q111.94 49.12 114.24 47.46Q116.53 45.80 119.02 45.80L119.02 45.80Q120.34 45.90 121.66 46.48L121.66 46.48Q122.78 47.02 124.15 48.10Q125.52 49.17 126.74 51.12L126.74 51.12L126.10 30.91ZM127.62 76.42L127.62 76.42Q127.52 73.10 127.40 69.63Q127.27 66.16 126.74 63.31Q126.20 60.45 125.10 58.62Q124.00 56.79 122 56.79L122 56.79Q120.14 56.79 119.09 58.30Q118.04 59.81 117.53 62.21Q117.02 64.60 116.92 67.48Q116.82 70.36 116.82 73.10L116.82 73.10Q116.82 75 116.90 77.10Q116.97 79.20 117.17 81.27Q117.36 83.35 117.75 85.21Q118.14 87.06 118.73 88.50Q119.31 89.94 120.17 90.77Q121.02 91.60 122.20 91.60L122.20 91.60Q123.66 91.60 124.69 90.41Q125.71 89.21 126.37 87.16Q127.03 85.11 127.32 82.35Q127.62 79.59 127.62 76.42ZM157.43 35.11L157.43 35.11Q157.43 36.62 156.94 37.92Q156.45 39.21 155.47 40.16Q154.50 41.11 153.01 41.65Q151.52 42.19 149.52 42.19L149.52 42.19Q147.32 42.19 145.83 41.65Q144.34 41.11 143.39 40.16Q142.44 39.21 142.02 37.92Q141.61 36.62 141.61 35.11L141.61 35.11Q141.61 33.64 142.04 32.35Q142.48 31.05 143.44 30.08Q144.39 29.10 145.90 28.54Q147.42 27.98 149.52 27.98L149.52 27.98Q151.62 27.98 153.10 28.54Q154.59 29.10 155.55 30.08Q156.50 31.05 156.96 32.35Q157.43 33.64 157.43 35.11ZM154.50 49.32L154.50 49.32Q154.20 52.00 154.01 55.08Q153.81 58.15 153.67 61.45Q153.52 64.75 153.47 68.14Q153.42 71.53 153.42 74.80L153.42 74.80Q153.42 78.61 153.50 82.15Q153.57 85.69 153.69 88.67Q153.81 91.65 153.98 93.95Q154.15 96.24 154.40 97.51L154.40 97.51Q152.45 97.51 150.35 97.61L150.35 97.61Q148.54 97.71 146.29 97.85Q144.05 98.00 141.80 98.29L141.80 98.29Q142.63 89.50 142.92 82.20Q143.22 74.90 143.22 69.09L143.22 69.09Q143.22 64.11 143.05 60.38Q142.88 56.64 142.68 54.05L142.68 54.05Q142.48 51.03 142.19 48.88L142.19 48.88Q144.93 49.22 147.20 49.32Q149.47 49.41 151.13 49.41L151.13 49.41Q151.91 49.41 152.54 49.41Q153.18 49.41 153.62 49.37L153.62 49.37Q154.15 49.37 154.50 49.32ZM181.87 48.49L181.08 59.91Q180.40 59.03 179.42 58.54Q178.45 58.06 177.47 57.81Q176.49 57.57 175.66 57.50Q174.83 57.42 174.49 57.42L174.49 57.42Q173.03 57.42 171.88 58.69Q170.73 59.96 169.93 62.30Q169.12 64.65 168.71 67.99Q168.29 71.34 168.29 75.49L168.29 75.49Q168.29 79.49 168.85 82.79Q169.41 86.08 170.83 88.45Q172.25 90.82 174.64 92.24Q177.03 93.65 180.69 93.90L180.69 93.90L180.40 102.29Q179.57 102.39 178.76 102.44Q177.96 102.49 177.18 102.49L177.18 102.49Q172.98 102.49 169.93 101.44Q166.88 100.39 164.73 98.49Q162.58 96.58 161.24 93.97Q159.89 91.36 159.11 88.26Q158.33 85.16 158.06 81.67Q157.79 78.17 157.79 74.51L157.79 74.51Q157.79 71.97 157.92 68.87Q158.04 65.77 158.50 62.62Q158.96 59.47 159.92 56.49Q160.87 53.52 162.53 51.20Q164.19 48.88 166.70 47.49Q169.22 46.09 172.78 46.09L172.78 46.09Q174.35 46.09 175.81 46.34Q177.28 46.58 178.50 46.95Q179.72 47.31 180.60 47.73Q181.47 48.14 181.87 48.49L181.87 48.49ZM212.99 72.02L212.99 72.02Q212.99 77.98 212.46 82.47Q211.92 86.96 210.92 90.26Q209.92 93.55 208.53 95.73Q207.13 97.90 205.45 99.22Q203.77 100.54 201.81 101.07Q199.86 101.61 197.81 101.61L197.81 101.61Q195.76 101.61 193.88 101.17Q192.00 100.73 190.39 99.56Q188.78 98.39 187.43 96.39Q186.09 94.38 185.16 91.26Q184.23 88.13 183.72 83.79Q183.21 79.44 183.21 73.58L183.21 73.58Q183.21 64.79 184.50 59.18Q185.80 53.56 187.90 50.32Q190.00 47.07 192.68 45.83Q195.37 44.58 198.20 44.58L198.20 44.58Q200.01 44.58 201.84 44.95Q203.67 45.31 205.30 46.39Q206.94 47.46 208.36 49.37Q209.77 51.27 210.80 54.32Q211.82 57.37 212.41 61.72Q212.99 66.06 212.99 72.02ZM202.50 72.41L202.50 72.41Q202.50 67.72 202.15 64.72Q201.81 61.72 201.23 59.96Q200.64 58.20 199.81 57.54Q198.98 56.88 198.00 56.88L198.00 56.88Q196.88 56.88 196.05 57.84Q195.22 58.79 194.66 60.89Q194.10 62.99 193.80 66.28Q193.51 69.58 193.51 74.32L193.51 74.32Q193.51 79.10 193.88 82.25Q194.24 85.40 194.90 87.28Q195.56 89.16 196.47 89.94Q197.37 90.72 198.39 90.72L198.39 90.72Q200.54 90.72 201.52 86.28Q202.50 81.84 202.50 72.41ZM245.39 72.02L245.39 72.02Q245.39 77.98 244.86 82.47Q244.32 86.96 243.32 90.26Q242.32 93.55 240.92 95.73Q239.53 97.90 237.85 99.22Q236.16 100.54 234.21 101.07Q232.26 101.61 230.21 101.61L230.21 101.61Q228.16 101.61 226.28 101.17Q224.40 100.73 222.79 99.56Q221.17 98.39 219.83 96.39Q218.49 94.38 217.56 91.26Q216.63 88.13 216.12 83.79Q215.61 79.44 215.61 73.58L215.61 73.58Q215.61 64.79 216.90 59.18Q218.20 53.56 220.29 50.32Q222.39 47.07 225.08 45.83Q227.77 44.58 230.60 44.58L230.60 44.58Q232.40 44.58 234.24 44.95Q236.07 45.31 237.70 46.39Q239.34 47.46 240.75 49.37Q242.17 51.27 243.20 54.32Q244.22 57.37 244.81 61.72Q245.39 66.06 245.39 72.02ZM234.89 72.41L234.89 72.41Q234.89 67.72 234.55 64.72Q234.21 61.72 233.63 59.96Q233.04 58.20 232.21 57.54Q231.38 56.88 230.40 56.88L230.40 56.88Q229.28 56.88 228.45 57.84Q227.62 58.79 227.06 60.89Q226.50 62.99 226.20 66.28Q225.91 69.58 225.91 74.32L225.91 74.32Q225.91 79.10 226.28 82.25Q226.64 85.40 227.30 87.28Q227.96 89.16 228.86 89.94Q229.77 90.72 230.79 90.72L230.79 90.72Q232.94 90.72 233.92 86.28Q234.89 81.84 234.89 72.41ZM265.5 45C261 22 245 -2 215 0C245 2 254 33 254 45L265.5 45Q265.24 45.51 265.00 49.22L265.00 49.22Q266.85 49.12 268.68 49.05Q270.52 48.97 272.42 48.78L272.42 48.78L272.08 58.69Q270.22 58.59 268.29 58.59Q266.37 58.59 264.51 58.59L264.51 58.59Q264.12 65.63 263.95 72.34Q263.78 79.05 263.78 85.89L263.78 85.89Q263.78 89.40 263.85 92.94Q263.92 96.48 264.02 100.10L264.02 100.10L253.28 100.29Q253.62 89.79 253.87 79.52Q254.11 69.24 254.11 58.79L254.11 58.79Q252.25 58.89 250.35 58.96Q248.45 59.03 246.59 59.18L246.59 59.18L246.98 48.49Q248.69 48.73 250.50 48.88Q252.30 49.02 254.01 49.12L254.01 49.12Q254.01 45.31 254 45L254 45Z"
-            fill="none"
-            stroke="rgba(0,0,0,0.7)"
-            stroke-width="10"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M33.59 49.22L33.59 49.22Q33.59 52.25 32.93 55.47Q32.28 58.69 30.88 61.67Q29.49 64.65 27.34 67.14Q25.20 69.63 22.22 71.19L22.22 71.19Q25.10 72.46 26.78 74.37Q28.47 76.27 29.35 78.30Q30.22 80.32 30.47 82.15Q30.71 83.98 30.71 85.11L30.71 85.11Q30.71 88.82 29.61 91.48Q28.52 94.14 26.81 95.97Q25.10 97.80 22.97 98.90Q20.85 100 18.77 100.59Q16.70 101.17 14.89 101.34Q13.09 101.51 12.01 101.51L12.01 101.51Q10.64 101.46 9.23 101.27L9.23 101.27Q8.01 101.07 6.62 100.71Q5.22 100.34 4.10 99.61L4.10 99.61Q4.39 90.33 4.39 81.10L4.39 81.10Q4.39 68.55 3.83 56.30Q3.27 44.04 2.20 31.59L2.20 31.59Q4.44 30.91 6.67 30.52Q8.89 30.13 10.69 29.93L10.69 29.93Q12.79 29.74 14.70 29.69L14.70 29.69Q16.21 29.69 18.19 30.05Q20.17 30.42 22.27 31.32Q24.37 32.23 26.39 33.67Q28.42 35.11 30.03 37.28Q31.64 39.45 32.62 42.41Q33.59 45.36 33.59 49.22ZM24.12 51.42L24.12 51.42Q24.12 51.46 24.12 50.56Q24.12 49.66 23.90 48.27Q23.68 46.88 23.17 45.21Q22.66 43.55 21.63 42.09Q20.61 40.63 18.97 39.53Q17.33 38.43 14.89 38.18L14.89 38.18Q14.60 46.24 14.33 54.25Q14.06 62.26 13.92 70.31L13.92 70.31Q15.67 69.68 17.07 68.51Q18.46 67.33 19.51 65.89Q20.56 64.45 21.29 62.82Q22.02 61.18 22.56 59.57L22.56 59.57Q23.78 55.81 24.12 51.42ZM21.39 83.79L21.39 83.79Q21.29 81.40 20.41 79.44L20.41 79.44Q20.02 78.61 19.48 77.76Q18.95 76.90 18.14 76.20Q17.33 75.49 16.26 74.98Q15.19 74.46 13.82 74.22L13.82 74.22Q13.67 79.35 13.57 84.40Q13.48 89.45 13.48 94.58L13.48 94.58Q14.94 94.04 16.06 93.29Q17.19 92.53 18.02 91.67Q18.85 90.82 19.41 89.89Q19.97 88.96 20.36 88.09L20.36 88.09Q21.24 86.04 21.39 83.79ZM65.50 68.90L65.50 68.90Q65.50 76.61 65.43 84.33Q65.36 92.04 65.11 100.39L65.11 100.39L56.62 99.90L56.62 93.31Q55.15 95.95 53.30 97.34Q51.44 98.73 49.78 99.41L49.78 99.41Q47.83 100.20 45.92 100.29L45.92 100.29Q43.58 100.29 41.53 99.24Q39.48 98.19 37.96 96.44Q36.45 94.68 35.60 92.41Q34.74 90.14 34.74 87.70L34.74 87.70Q34.74 84.91 35.94 82.20Q37.13 79.49 40.02 77.29L40.02 77.29Q43.87 74.32 46.71 72.31Q49.54 70.31 51.42 68.68Q53.30 67.04 54.20 65.55Q55.10 64.06 55.10 62.11L55.10 62.11Q55.10 58.89 54.03 57.30Q52.96 55.71 51.20 55.71L51.20 55.71Q50.12 55.71 49.37 56.27Q48.61 56.84 48.15 57.74Q47.68 58.64 47.46 59.74Q47.24 60.84 47.24 61.91L47.24 61.91Q47.24 62.65 47.32 63.53Q47.39 64.40 47.63 65.38L47.63 65.38L36.40 65.58Q36.30 64.75 36.26 63.99Q36.21 63.23 36.21 62.50L36.21 62.50Q36.21 59.47 37.23 56.52Q38.26 53.56 40.24 51.25Q42.21 48.93 45.04 47.51Q47.88 46.09 51.54 46.09L51.54 46.09Q56.28 46.09 59.03 48.07Q61.79 50.05 63.23 53.27Q64.67 56.49 65.09 60.57Q65.50 64.65 65.50 68.90ZM54.52 82.71L54.52 82.71Q54.76 81.49 54.96 79.93L54.96 79.93Q55.15 78.61 55.30 76.73Q55.45 74.85 55.54 72.51L55.54 72.51Q54.76 73.58 54.03 74.41Q53.30 75.24 52.66 75.88L52.66 75.88Q51.93 76.61 51.29 77.20L51.29 77.20Q50.17 78.13 48.90 79.27Q47.63 80.42 46.58 81.69Q45.53 82.96 44.83 84.30Q44.12 85.64 44.12 86.91L44.12 86.91Q44.12 88.28 45.04 89.43Q45.97 90.58 47.34 90.58L47.34 90.58Q48.37 90.58 49.46 89.99Q50.56 89.40 51.56 88.33Q52.56 87.26 53.35 85.84Q54.13 84.42 54.52 82.71ZM101.52 99.12L90.04 99.71Q91.12 91.85 91.58 83.79Q92.04 75.73 92.04 66.89L92.04 66.89Q92.04 63.92 91.65 62.13Q91.26 60.35 90.63 59.40Q89.99 58.45 89.26 58.18Q88.53 57.91 87.84 57.91L87.84 57.91Q86.87 57.91 86.01 58.25Q85.16 58.59 84.43 59.57Q83.69 60.55 83.08 62.30Q82.47 64.06 82.03 66.94Q81.59 69.82 81.37 73.95Q81.15 78.08 81.15 83.79L81.15 83.79Q81.15 85.84 81.15 88.06Q81.15 90.28 81.18 92.29Q81.20 94.29 81.23 95.83Q81.25 97.36 81.35 98.00L81.35 98.00L70.31 97.90Q70.46 93.46 70.53 89.97Q70.61 86.47 70.66 83.54Q70.71 80.62 70.73 78.05Q70.75 75.49 70.75 73.00L70.75 73.00Q70.75 70.75 70.73 68.38Q70.71 66.02 70.68 63.28Q70.66 60.55 70.58 57.30Q70.51 54.05 70.41 50.10L70.41 50.10L81.84 49.80L81.64 54.79Q82.96 52.29 84.47 50.81Q85.99 49.32 87.48 48.49Q88.97 47.66 90.38 47.39Q91.80 47.12 92.92 47.12L92.92 47.12Q95.95 47.12 97.90 49.22Q99.86 51.32 101.00 54.81Q102.15 58.30 102.59 62.79Q103.03 67.29 103.03 72.12L103.03 72.12Q103.03 75.63 102.86 79.25Q102.69 82.86 102.47 86.35Q102.25 89.84 101.98 93.09Q101.71 96.34 101.52 99.12L101.52 99.12ZM126.10 30.91L137.92 30.42L136.70 100.59L127.32 100.59L127.32 95.61Q125.91 97.71 124.59 98.85Q123.27 100 122.24 100.54L122.24 100.54Q121.02 101.17 120.00 101.32L120.00 101.32Q117.51 101.32 115.07 99.83Q112.63 98.34 110.70 94.87Q108.77 91.41 107.55 85.77Q106.33 80.13 106.33 71.78L106.33 71.78Q106.33 65.38 107.38 60.52Q108.43 55.66 110.18 52.39Q111.94 49.12 114.24 47.46Q116.53 45.80 119.02 45.80L119.02 45.80Q120.34 45.90 121.66 46.48L121.66 46.48Q122.78 47.02 124.15 48.10Q125.52 49.17 126.74 51.12L126.74 51.12L126.10 30.91ZM127.62 76.42L127.62 76.42Q127.52 73.10 127.40 69.63Q127.27 66.16 126.74 63.31Q126.20 60.45 125.10 58.62Q124.00 56.79 122 56.79L122 56.79Q120.14 56.79 119.09 58.30Q118.04 59.81 117.53 62.21Q117.02 64.60 116.92 67.48Q116.82 70.36 116.82 73.10L116.82 73.10Q116.82 75 116.90 77.10Q116.97 79.20 117.17 81.27Q117.36 83.35 117.75 85.21Q118.14 87.06 118.73 88.50Q119.31 89.94 120.17 90.77Q121.02 91.60 122.20 91.60L122.20 91.60Q123.66 91.60 124.69 90.41Q125.71 89.21 126.37 87.16Q127.03 85.11 127.32 82.35Q127.62 79.59 127.62 76.42ZM157.43 35.11L157.43 35.11Q157.43 36.62 156.94 37.92Q156.45 39.21 155.47 40.16Q154.50 41.11 153.01 41.65Q151.52 42.19 149.52 42.19L149.52 42.19Q147.32 42.19 145.83 41.65Q144.34 41.11 143.39 40.16Q142.44 39.21 142.02 37.92Q141.61 36.62 141.61 35.11L141.61 35.11Q141.61 33.64 142.04 32.35Q142.48 31.05 143.44 30.08Q144.39 29.10 145.90 28.54Q147.42 27.98 149.52 27.98L149.52 27.98Q151.62 27.98 153.10 28.54Q154.59 29.10 155.55 30.08Q156.50 31.05 156.96 32.35Q157.43 33.64 157.43 35.11ZM154.50 49.32L154.50 49.32Q154.20 52.00 154.01 55.08Q153.81 58.15 153.67 61.45Q153.52 64.75 153.47 68.14Q153.42 71.53 153.42 74.80L153.42 74.80Q153.42 78.61 153.50 82.15Q153.57 85.69 153.69 88.67Q153.81 91.65 153.98 93.95Q154.15 96.24 154.40 97.51L154.40 97.51Q152.45 97.51 150.35 97.61L150.35 97.61Q148.54 97.71 146.29 97.85Q144.05 98.00 141.80 98.29L141.80 98.29Q142.63 89.50 142.92 82.20Q143.22 74.90 143.22 69.09L143.22 69.09Q143.22 64.11 143.05 60.38Q142.88 56.64 142.68 54.05L142.68 54.05Q142.48 51.03 142.19 48.88L142.19 48.88Q144.93 49.22 147.20 49.32Q149.47 49.41 151.13 49.41L151.13 49.41Q151.91 49.41 152.54 49.41Q153.18 49.41 153.62 49.37L153.62 49.37Q154.15 49.37 154.50 49.32ZM181.87 48.49L181.08 59.91Q180.40 59.03 179.42 58.54Q178.45 58.06 177.47 57.81Q176.49 57.57 175.66 57.50Q174.83 57.42 174.49 57.42L174.49 57.42Q173.03 57.42 171.88 58.69Q170.73 59.96 169.93 62.30Q169.12 64.65 168.71 67.99Q168.29 71.34 168.29 75.49L168.29 75.49Q168.29 79.49 168.85 82.79Q169.41 86.08 170.83 88.45Q172.25 90.82 174.64 92.24Q177.03 93.65 180.69 93.90L180.69 93.90L180.40 102.29Q179.57 102.39 178.76 102.44Q177.96 102.49 177.18 102.49L177.18 102.49Q172.98 102.49 169.93 101.44Q166.88 100.39 164.73 98.49Q162.58 96.58 161.24 93.97Q159.89 91.36 159.11 88.26Q158.33 85.16 158.06 81.67Q157.79 78.17 157.79 74.51L157.79 74.51Q157.79 71.97 157.92 68.87Q158.04 65.77 158.50 62.62Q158.96 59.47 159.92 56.49Q160.87 53.52 162.53 51.20Q164.19 48.88 166.70 47.49Q169.22 46.09 172.78 46.09L172.78 46.09Q174.35 46.09 175.81 46.34Q177.28 46.58 178.50 46.95Q179.72 47.31 180.60 47.73Q181.47 48.14 181.87 48.49L181.87 48.49ZM212.99 72.02L212.99 72.02Q212.99 77.98 212.46 82.47Q211.92 86.96 210.92 90.26Q209.92 93.55 208.53 95.73Q207.13 97.90 205.45 99.22Q203.77 100.54 201.81 101.07Q199.86 101.61 197.81 101.61L197.81 101.61Q195.76 101.61 193.88 101.17Q192.00 100.73 190.39 99.56Q188.78 98.39 187.43 96.39Q186.09 94.38 185.16 91.26Q184.23 88.13 183.72 83.79Q183.21 79.44 183.21 73.58L183.21 73.58Q183.21 64.79 184.50 59.18Q185.80 53.56 187.90 50.32Q190.00 47.07 192.68 45.83Q195.37 44.58 198.20 44.58L198.20 44.58Q200.01 44.58 201.84 44.95Q203.67 45.31 205.30 46.39Q206.94 47.46 208.36 49.37Q209.77 51.27 210.80 54.32Q211.82 57.37 212.41 61.72Q212.99 66.06 212.99 72.02ZM202.50 72.41L202.50 72.41Q202.50 67.72 202.15 64.72Q201.81 61.72 201.23 59.96Q200.64 58.20 199.81 57.54Q198.98 56.88 198.00 56.88L198.00 56.88Q196.88 56.88 196.05 57.84Q195.22 58.79 194.66 60.89Q194.10 62.99 193.80 66.28Q193.51 69.58 193.51 74.32L193.51 74.32Q193.51 79.10 193.88 82.25Q194.24 85.40 194.90 87.28Q195.56 89.16 196.47 89.94Q197.37 90.72 198.39 90.72L198.39 90.72Q200.54 90.72 201.52 86.28Q202.50 81.84 202.50 72.41ZM245.39 72.02L245.39 72.02Q245.39 77.98 244.86 82.47Q244.32 86.96 243.32 90.26Q242.32 93.55 240.92 95.73Q239.53 97.90 237.85 99.22Q236.16 100.54 234.21 101.07Q232.26 101.61 230.21 101.61L230.21 101.61Q228.16 101.61 226.28 101.17Q224.40 100.73 222.79 99.56Q221.17 98.39 219.83 96.39Q218.49 94.38 217.56 91.26Q216.63 88.13 216.12 83.79Q215.61 79.44 215.61 73.58L215.61 73.58Q215.61 64.79 216.90 59.18Q218.20 53.56 220.29 50.32Q222.39 47.07 225.08 45.83Q227.77 44.58 230.60 44.58L230.60 44.58Q232.40 44.58 234.24 44.95Q236.07 45.31 237.70 46.39Q239.34 47.46 240.75 49.37Q242.17 51.27 243.20 54.32Q244.22 57.37 244.81 61.72Q245.39 66.06 245.39 72.02ZM234.89 72.41L234.89 72.41Q234.89 67.72 234.55 64.72Q234.21 61.72 233.63 59.96Q233.04 58.20 232.21 57.54Q231.38 56.88 230.40 56.88L230.40 56.88Q229.28 56.88 228.45 57.84Q227.62 58.79 227.06 60.89Q226.50 62.99 226.20 66.28Q225.91 69.58 225.91 74.32L225.91 74.32Q225.91 79.10 226.28 82.25Q226.64 85.40 227.30 87.28Q227.96 89.16 228.86 89.94Q229.77 90.72 230.79 90.72L230.79 90.72Q232.94 90.72 233.92 86.28Q234.89 81.84 234.89 72.41ZM265.5 45C261 22 245 -2 215 0C245 2 254 33 254 45L265.5 45Q265.24 45.51 265.00 49.22L265.00 49.22Q266.85 49.12 268.68 49.05Q270.52 48.97 272.42 48.78L272.42 48.78L272.08 58.69Q270.22 58.59 268.29 58.59Q266.37 58.59 264.51 58.59L264.51 58.59Q264.12 65.63 263.95 72.34Q263.78 79.05 263.78 85.89L263.78 85.89Q263.78 89.40 263.85 92.94Q263.92 96.48 264.02 100.10L264.02 100.10L253.28 100.29Q253.62 89.79 253.87 79.52Q254.11 69.24 254.11 58.79L254.11 58.79Q252.25 58.89 250.35 58.96Q248.45 59.03 246.59 59.18L246.59 59.18L246.98 48.49Q248.69 48.73 250.50 48.88Q252.30 49.02 254.01 49.12L254.01 49.12Q254.01 45.31 254 45L254 45Z"
-            fill="url(#g)"
-          />
-        </svg>
+      <h1 class="hero-title">
+        <img src="logo.svg" alt="Bandicoot" class="logotype">
+      </h1>
+      <p class="hero-tagline">A word-digging puzzle game</p>
+      <p class="hero-desc">
+        Connect letters on a 6&times;6 grid to spell words and clear tiles.
+        When tiles clear, the ones above drop down, changing the board with every word you play.
+        Longer words earn massive multipliers. Beautiful dark-mode design. No ads.
+      </p>
+
+      <div class="store-badges">
+        <a href="#" class="store-badge" aria-label="Download on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
+          <div>
+            <span class="store-badge-sub">Download on the</span>
+            App Store
+          </div>
+        </a>
+        <a href="#" class="store-badge" aria-label="Get it on Google Play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm2.302-3.516L6.864 2.858l10.937 6.333zM19.2 10.8 17.107 12 19.2 13.2a.5.5 0 0 0 0-.867L19.2 10.8z"/></svg>
+          <div>
+            <span class="store-badge-sub">Get it on</span>
+            Google Play
+          </div>
+        </a>
       </div>
-    </div>
+
+      <p style="font-size: 0.8rem; color: var(--text-dim);">Coming soon to iOS and Android</p>
+    </section>
 
     <div class="divider"></div>
 
-    <div class="content">
-      <h2>A word-digging puzzle game</h2>
-      <p class="release-date">Coming Spring 2026</p>
-
-      <p>Swipe to connect letters on a 6x6 grid, spell words, and clear tiles. Longer words score big multipliers. Chase perfect clears, climb leaderboards, and keep your daily streak alive.</p>
-
+    <!-- Features -->
+    <section class="features">
+      <p class="section-label">Five Ways to Play</p>
       <div class="modes">
         <div class="mode">
-          <div class="mode-name">Blitz</div>
-          <div class="mode-desc">Race the clock</div>
+          <div class="mode-name">Daily Dig <span class="mode-free">Free</span></div>
+          <div class="mode-desc">A new puzzle every day. Same board for everyone. Build your streak, climb the leaderboard.</div>
         </div>
         <div class="mode">
-          <div class="mode-name">Focus</div>
-          <div class="mode-desc">Beat the clock</div>
-        </div>
-        <div class="mode">
-          <div class="mode-name">Root</div>
-          <div class="mode-desc">Clear the board</div>
+          <div class="mode-name">Blitz <span class="mode-free">Free</span></div>
+          <div class="mode-desc">Race the clock. Two minutes. Tiles refill. Earn bonus time for longer words.</div>
         </div>
         <div class="mode">
           <div class="mode-name">Flow</div>
-          <div class="mode-desc">No limit. No rush.</div>
+          <div class="mode-desc">Endless and relaxed. No timer, tiles refill, free shuffle. Just dig.</div>
         </div>
         <div class="mode">
-          <div class="mode-name">Daily Dig</div>
-          <div class="mode-desc">New puzzle every day</div>
+          <div class="mode-name">Focus</div>
+          <div class="mode-desc">Clear the board before time runs out. No refills. Every word counts.</div>
+        </div>
+        <div class="mode">
+          <div class="mode-name">Root</div>
+          <div class="mode-desc">No timer. No pressure. Clear all 36 tiles for a perfect game.</div>
         </div>
       </div>
-    </div>
-  </main>
+      <p class="gold-note">Daily Dig and Blitz are free. Unlock all modes with <strong>Bandicoot Gold</strong> — one purchase, no subscription.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Highlights -->
+    <section class="highlights">
+      <p class="section-label">Why Bandicoot</p>
+      <div class="highlight-grid">
+        <div class="highlight">
+          <div class="highlight-icon">🏆</div>
+          <div class="highlight-title">Compete Daily</div>
+          <div class="highlight-desc">Same puzzle for everyone. Global leaderboard. A fresh word challenge every morning.</div>
+        </div>
+        <div class="highlight">
+          <div class="highlight-icon">📊</div>
+          <div class="highlight-title">Track Progress</div>
+          <div class="highlight-desc">Achievements, streaks, personal bests. See how your vocabulary stacks up.</div>
+        </div>
+        <div class="highlight">
+          <div class="highlight-icon">✨</div>
+          <div class="highlight-title">No Ads. Ever.</div>
+          <div class="highlight-desc">A premium word game without the clutter. No banners, no video ads, no dark patterns.</div>
+        </div>
+        <div class="highlight">
+          <div class="highlight-icon">🌍</div>
+          <div class="highlight-title">Play Anywhere</div>
+          <div class="highlight-desc">Works offline. Great for a quiet commute, a coffee break, or a daily routine.</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Email Signup -->
+    <section class="signup">
+      <h2>Stay in the loop</h2>
+      <p class="signup-sub">Get updates on new features and game modes. No spam, ever.</p>
+      <form
+        class="signup-form"
+        action="https://buttondown.com/api/emails/embed-subscribe/magicfactory"
+        method="post"
+        target="popupwindow"
+      >
+        <input type="email" name="email" placeholder="you@example.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="signup-fine">We respect your inbox. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
+    </section>
+  </div>
 
   <footer>
-    <small>&copy; 2026 Magic Factory, LLC &middot; <a href="/bandicoot/privacy">Privacy</a></small>
+    <div class="footer-links">
+      <a href="/bandicoot/privacy/">Privacy Policy</a>
+      <a href="/bandicoot/terms/">Terms of Use</a>
+      <a href="/">Magic Factory</a>
+    </div>
+    <small>&copy; 2026 Magic Factory. Boston, MA.</small>
   </footer>
 </body>
 </html>
