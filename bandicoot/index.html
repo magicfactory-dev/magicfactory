@@ -295,40 +295,6 @@
     }
 
     /* ── Highlights ── */
-    .highlights {
-      padding: 2rem 0 4rem;
-      animation: fadeUp 0.6s ease-out 0.3s both;
-    }
-
-    .highlight-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .highlight {
-      padding: 1.5rem;
-      border-radius: 14px;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.04);
-      text-align: center;
-    }
-    .highlight-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .highlight-title {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.8125rem;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-    }
-    .highlight-desc {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
 
     /* ── Editorial Moments ── */
     .moment {
@@ -598,6 +564,141 @@
       .peek-stage { height: 420px; }
     }
 
+    /* ── Achievements showcase ── */
+    .achievements {
+      padding: 4rem 0 3rem;
+      animation: fadeUp 0.6s ease-out 0.32s both;
+      position: relative;
+    }
+    .achievements::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 30% 50%, rgba(253, 224, 122, 0.1), transparent 65%),
+        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(184, 164, 254, 0.08), transparent 65%);
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.7;
+    }
+    .achievements-intro {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .achievements-intro p {
+      font-size: 1rem;
+      color: var(--text-body);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.65rem;
+    }
+    .achievement {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--ach-color, var(--gold));
+    }
+    .achievement-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--text);
+      letter-spacing: -0.005em;
+    }
+    .achievement-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.45;
+    }
+    .achievements-more {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+    .achievements-more strong {
+      color: var(--gold);
+      font-style: normal;
+    }
+    @media (max-width: 480px) {
+      .achievements-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Pricing callout ── */
+    .pricing-card {
+      max-width: 480px;
+      margin: 3rem auto 0;
+      padding: 1.5rem 1.75rem;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(184, 164, 254, 0.08), rgba(253, 224, 122, 0.06));
+      border: 1px solid rgba(184, 164, 254, 0.2);
+      text-align: center;
+    }
+    .pricing-line {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.375rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .pricing-price {
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pricing-detail {
+      font-size: 0.875rem;
+      color: var(--text-body);
+    }
+
+    /* ── Maker note ── */
+    .maker {
+      max-width: 600px;
+      margin: 5rem auto 3rem;
+      padding: 0 1.5rem;
+      text-align: center;
+      animation: fadeUp 0.6s ease-out 0.4s both;
+    }
+    .maker-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.8125rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 1.25rem;
+    }
+    .maker-quote {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.25rem, 3vw, 1.5rem);
+      line-height: 1.5;
+      color: var(--text-body);
+      max-width: 540px;
+      margin: 0 auto 1.25rem;
+    }
+    .maker-quote::before { content: '"'; color: var(--violet); margin-right: 0.1em; }
+    .maker-quote::after { content: '"'; color: var(--violet); margin-left: 0.1em; }
+    .maker-sig {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-dim);
+    }
+    .maker-sig strong { color: var(--text-body); font-weight: 700; }
+
     /* ── Email Signup ── */
     .signup {
       padding: 3rem 0;
@@ -709,7 +810,6 @@
     }
 
     @media (max-width: 480px) {
-      .highlight-grid { grid-template-columns: 1fr; }
       .signup-form { flex-direction: column; }
       .store-badges { flex-direction: column; align-items: center; }
     }
@@ -871,7 +971,7 @@
           </div>
         </div>
       </div>
-      <p class="gold-note">Daily Dig and Blitz are free. Unlock all modes with <strong>Bandicoot Gold</strong> — one purchase, no subscription.</p>
+      <p class="gold-note">Daily Dig and Blitz are free forever. <strong>Bandicoot Gold</strong> unlocks the rest.</p>
     </section>
 
     <div class="divider"></div>
@@ -909,30 +1009,44 @@
 
     <div class="divider"></div>
 
-    <!-- Highlights -->
-    <section class="highlights">
-      <p class="section-label">Why Bandicoot</p>
-      <div class="highlight-grid">
-        <div class="highlight">
-          <div class="highlight-icon" aria-hidden="true">🏆</div>
-          <div class="highlight-title">Compete Daily</div>
-          <div class="highlight-desc">Same puzzle for everyone. Global leaderboard. A fresh word challenge every morning.</div>
+    <!-- Achievements showcase -->
+    <section class="achievements">
+      <p class="section-label">26 Achievements to Unlock</p>
+      <div class="achievements-intro">
+        <p>From the obvious to the absurd. Some you'll earn the first day. Others will take months.</p>
+      </div>
+      <div class="achievements-grid">
+        <div class="achievement" style="--ach-color: var(--gold)">
+          <div class="achievement-name">Golden Nugget</div>
+          <div class="achievement-desc">Clear all 36 tiles for a perfect game</div>
         </div>
-        <div class="highlight">
-          <div class="highlight-icon" aria-hidden="true">📊</div>
-          <div class="highlight-title">Track Progress</div>
-          <div class="highlight-desc">Achievements, streaks, personal bests. See how your vocabulary stacks up.</div>
+        <div class="achievement" style="--ach-color: var(--violet)">
+          <div class="achievement-name">Burrowed In</div>
+          <div class="achievement-desc">Build a 30-day Daily Dig streak</div>
         </div>
-        <div class="highlight">
-          <div class="highlight-icon" aria-hidden="true">✨</div>
-          <div class="highlight-title">No Ads. Ever.</div>
-          <div class="highlight-desc">A premium word game without the clutter. No banners, no video ads, no dark patterns.</div>
+        <div class="achievement" style="--ach-color: var(--pink)">
+          <div class="achievement-name">Mega Strike</div>
+          <div class="achievement-desc">Score 200+ points on a single word</div>
         </div>
-        <div class="highlight">
-          <div class="highlight-icon" aria-hidden="true">🌍</div>
-          <div class="highlight-title">Play Anywhere</div>
-          <div class="highlight-desc">Works offline. Great for a quiet commute, a coffee break, or a daily routine.</div>
+        <div class="achievement" style="--ach-color: var(--blue)">
+          <div class="achievement-name">Night Shift</div>
+          <div class="achievement-desc">Complete a game between midnight and 4am</div>
         </div>
+        <div class="achievement" style="--ach-color: var(--green)">
+          <div class="achievement-name">Word Hoard</div>
+          <div class="achievement-desc">Find 100 words across all games</div>
+        </div>
+        <div class="achievement" style="--ach-color: var(--orange)">
+          <div class="achievement-name">Ooh That Smell</div>
+          <div class="achievement-desc">An obscure little easter egg</div>
+        </div>
+      </div>
+      <p class="achievements-more">+ <strong>20 more</strong> waiting to be unlocked</p>
+
+      <!-- Pricing callout right after achievements -->
+      <div class="pricing-card">
+        <p class="pricing-line">Free to play. <span class="pricing-price">$2.99</span> unlocks all modes.</p>
+        <p class="pricing-detail">One-time purchase. No subscription. No ads.</p>
       </div>
     </section>
 
@@ -976,6 +1090,19 @@
           <img src="screenshots/leaderboard-crop.png" alt="Bandicoot leaderboard with top 10 players">
         </div>
       </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- Maker note -->
+    <section class="maker">
+      <p class="maker-label">From the maker</p>
+      <p class="maker-quote">
+        I built Bandicoot because I wanted a word game I could play every day
+        without ads, IAP traps, or pay-to-win nonsense. Just letters, words,
+        and the satisfying click of tiles falling into place.
+      </p>
+      <p class="maker-sig"><strong>Jeremy</strong> — Magic Factory, Boston</p>
     </section>
 
     <div class="divider"></div>
