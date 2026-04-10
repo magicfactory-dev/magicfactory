@@ -428,7 +428,8 @@
         0 0 0 2px rgba(255, 255, 255, 0.08);
       flex-shrink: 0;
     }
-    .moment-phone img {
+    .moment-phone img,
+    .moment-phone video {
       display: block;
       width: 100%;
       height: 100%;
@@ -761,7 +762,16 @@
         </div>
         <div class="moment-image">
           <div class="moment-phone moment-phone-tilt-left">
-            <img src="screenshots/home-dark.png" alt="Bandicoot mid-game">
+            <video
+              src="screenshots/gameplay.mp4"
+              poster="screenshots/home-dark.png"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Bandicoot gameplay loop showing words being played and tiles clearing"
+            ></video>
           </div>
         </div>
       </div>
