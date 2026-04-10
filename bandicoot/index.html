@@ -103,7 +103,7 @@
     .logotype {
       display: block;
       margin: 0 auto;
-      width: clamp(240px, 60vw, 340px);
+      width: clamp(280px, 65vw, 380px);
       height: auto;
     }
 
@@ -446,6 +446,27 @@
     .moment-phone-tilt-left { transform: rotate(-5deg); }
     .moment-phone-tilt-right { transform: rotate(5deg); }
 
+    /* Modal card — standalone editorial element, no phone bezel */
+    .modal-card {
+      position: relative;
+      width: 280px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--bg);
+      box-shadow:
+        0 30px 80px rgba(142, 236, 192, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+    .modal-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .modal-card-tilt { transform: rotate(-3deg); }
+
     /* Glow — each moment uses its accent color as a soft atmospheric tint */
     .moment {
       --moment-accent: var(--violet);
@@ -480,25 +501,19 @@
       position: relative;
       max-width: 320px;
       margin: 1.5rem auto 0;
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
       transform: rotate(-2deg);
       box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.5),
-        0 8px 30px rgba(0, 0, 0, 0.3),
+        0 30px 80px rgba(251, 164, 184, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.5),
+        0 4px 16px rgba(0, 0, 0, 0.3),
         0 0 0 1px rgba(255, 255, 255, 0.06);
     }
     .leaderboard-closeup img {
       display: block;
       width: 100%;
       height: auto;
-    }
-    .leaderboard-closeup::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 60%, var(--bg));
-      pointer-events: none;
     }
 
     /* Mobile: stack and shrink phones */
@@ -735,7 +750,7 @@
       </div>
 
       <h1 class="hero-title">
-        <img src="logo.svg" alt="Bandicoot" class="logotype">
+        <img src="logo-animated.svg" alt="Bandicoot" class="logotype">
       </h1>
       <p class="hero-tagline">A word-digging puzzle game</p>
       <p class="hero-desc">
@@ -939,8 +954,8 @@
           </p>
         </div>
         <div class="moment-image">
-          <div class="moment-phone moment-phone-tilt-left">
-            <img src="screenshots/word-definition.png" alt="Word definition modal">
+          <div class="modal-card modal-card-tilt">
+            <img src="screenshots/word-definition-modal.png" alt="Word definition modal showing the entry for SCRATCH">
           </div>
         </div>
       </div>
@@ -958,7 +973,7 @@
           Climb the ranks. Defend your streak.
         </p>
         <div class="leaderboard-closeup">
-          <img src="screenshots/leaderboard.png" alt="Bandicoot leaderboard">
+          <img src="screenshots/leaderboard-crop.png" alt="Bandicoot leaderboard with top 10 players">
         </div>
       </div>
     </section>
