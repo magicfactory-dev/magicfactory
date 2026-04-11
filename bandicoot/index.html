@@ -2316,12 +2316,15 @@
       });
     })();
 
-    // Floating CTA: fades in after the hero leaves the viewport. Dismissible,
-    // dismissal persists across reloads via localStorage. Clicking the body
-    // navigates to #signup; the × button dismisses without navigating.
+    // Floating CTA: fades in after the hero leaves the viewport, and hides
+    // again once the bottom signup form scrolls into view so the floating
+    // pill doesn't sit on top of the actual form. Dismissible; dismissal
+    // persists across reloads via localStorage. Clicking the body navigates
+    // to #signup; the × button dismisses without navigating.
     (function () {
       var cta = document.getElementById('floating-cta');
       var hero = document.querySelector('.hero');
+      var signup = document.getElementById('signup');
       var closeBtn = cta && cta.querySelector('.floating-cta-close');
       if (!cta || !hero) return;
       var DISMISS_KEY = 'bandicoot_cta_dismissed';
@@ -2331,20 +2334,41 @@
         }
       } catch (e) {}
       if (typeof IntersectionObserver === 'undefined') return;
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            cta.classList.remove('is-visible');
-            cta.setAttribute('aria-hidden', 'true');
-            cta.setAttribute('tabindex', '-1');
-          } else {
-            cta.classList.add('is-visible');
-            cta.setAttribute('aria-hidden', 'false');
-            cta.setAttribute('tabindex', '0');
-          }
-        });
+
+      var heroInView = true;
+      var signupInView = false;
+
+      function applyState() {
+        // Show only when hero has scrolled away AND bottom signup is not yet
+        // visible. When the signup enters the viewport we hand off — the
+        // user can see the real form, so the floating pill is redundant.
+        var shouldShow = !heroInView && !signupInView;
+        if (shouldShow) {
+          cta.classList.add('is-visible');
+          cta.setAttribute('aria-hidden', 'false');
+          cta.setAttribute('tabindex', '0');
+        } else {
+          cta.classList.remove('is-visible');
+          cta.setAttribute('aria-hidden', 'true');
+          cta.setAttribute('tabindex', '-1');
+        }
+      }
+
+      var heroIO = new IntersectionObserver(function (entries) {
+        heroInView = entries[0].isIntersecting;
+        applyState();
       }, { threshold: 0.1 });
-      io.observe(hero);
+      heroIO.observe(hero);
+
+      var signupIO = null;
+      if (signup) {
+        signupIO = new IntersectionObserver(function (entries) {
+          signupInView = entries[0].isIntersecting;
+          applyState();
+        }, { threshold: 0.15 });
+        signupIO.observe(signup);
+      }
+
       if (closeBtn) {
         closeBtn.addEventListener('click', function (e) {
           e.preventDefault();
@@ -2352,7 +2376,8 @@
           cta.classList.remove('is-visible');
           cta.setAttribute('aria-hidden', 'true');
           cta.setAttribute('tabindex', '-1');
-          io.disconnect();
+          heroIO.disconnect();
+          if (signupIO) signupIO.disconnect();
           try {
             if (window.localStorage) localStorage.setItem(DISMISS_KEY, '1');
           } catch (err) {}
