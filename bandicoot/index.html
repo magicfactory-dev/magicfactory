@@ -1917,6 +1917,15 @@
       font-family: 'Sora', sans-serif;
       font-weight: 600;
     }
+    /* Footer link anchors — give every link a uniform box width so that
+       when the column is right-aligned (tablet/desktop), the longest link
+       sets the width and shorter links right-align cleanly within it.
+       Without this, "Privacy Policy" (92px) and "Terms of Use" (85px) had
+       a 7px ragged left edge on their stacked column. */
+    .footer-links a {
+      display: inline-block;
+      text-align: right;
+    }
 
     /* Tablet/desktop: two-column row layout. Brand (logo + copyright)
        anchors to the left, legal links anchor to the right. The
@@ -1935,7 +1944,12 @@
       }
       .footer-links {
         flex-direction: column;
-        align-items: flex-end;
+        /* align-items: stretch lets the longest link set the column width
+           and the shorter links inherit it. Combined with text-align: right
+           on the <a> elements, this produces a clean column with both
+           edges flush — no 7px ragged left from "Terms of Use" being
+           shorter than "Privacy Policy". */
+        align-items: stretch;
         gap: 0.65rem;
       }
     }
