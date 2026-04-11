@@ -30,6 +30,11 @@
       --blue: #96cffe;
       --violet: #b8a4fe;
       --orchid: #dca4f4;
+
+      /* Shared vertical rhythm — every editorial section (moment, mode
+         strip, signup) uses this for its padding-block. Keeps gaps
+         metrically consistent across the whole page. */
+      --section-gap: clamp(3rem, 7vh, 5.5rem);
     }
 
     html { background: var(--bg); }
@@ -383,7 +388,12 @@
        the wordmark + tagline lead, the video follows, then description + CTA.
        This applies to everything from 960px down to 360px with proportional
        sizing adjustments. */
-    @media (max-width: 959px) {
+    /* Hero stacks to single column only on true phone widths. Tablets
+       (720–1023px, including iPad Mini and most landscape phones) get the
+       two-column desktop hero layout — the old 959px breakpoint left iPad
+       rendering a narrow stacked mobile column in the middle of an 820px
+       viewport with huge empty side margins. */
+    @media (max-width: 719px) {
       .hero {
         padding: clamp(2rem, 5vw, 3rem) 0;
         /* Undo the full-bleed container-breakout — at stacked widths we want
@@ -757,13 +767,13 @@
 
     /* ── Editorial Moments ── */
     .moment {
-      padding: 4rem 0;
+      padding-block: var(--section-gap);
+      padding-left: max(1.5rem, calc(50vw - 580px));
+      padding-right: max(1.5rem, calc(50vw - 580px));
       position: relative;
       /* Break out of the 680px container — same pattern as .hero */
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding-left: max(1.5rem, calc(50vw - 580px));
-      padding-right: max(1.5rem, calc(50vw - 580px));
     }
 
     .moment-grid {
@@ -1170,7 +1180,8 @@
 
     /* ── Main Email Signup (gold treatment, matches promise card family) ── */
     .signup {
-      padding: 4rem 1.5rem 3.5rem;
+      padding-block: var(--section-gap);
+      padding-inline: 1.5rem;
       text-align: center;
       position: relative;
       max-width: 560px;
@@ -1300,9 +1311,6 @@
        Single centered editorial column. The wpill sits at the bottom of the
        section in normal flow and animates in / out via the IntersectionObserver
        loop in the inline script below.  */
-    .chain-moment {
-      padding-block: clamp(3rem, 8vh, 6rem);
-    }
     .chain-moment::before {
       background:
         radial-gradient(ellipse 70% 50% at 30% 50%, rgba(240, 184, 64, 0.1), transparent 65%),
@@ -1316,20 +1324,32 @@
       flex-direction: column;
       align-items: center;
     }
+    /* Left-align the chain body copy even though the surrounding column is
+       centered. Centered copy works for 1–2 lines; at 3+ lines the ragged
+       left edge reads as accidental layout. */
     .chain-col .moment-copy {
       max-width: 42ch;
       margin-left: auto;
       margin-right: auto;
+      text-align: left;
     }
     .chain-col .chain-scale {
       justify-content: center;
     }
+    /* Balance the Chain headline wrap so "Longer words. Bigger scores."
+       doesn't break the italic phrase across two lines on narrow viewports. */
+    .chain-col .moment-headline-serif {
+      text-wrap: balance;
+      max-width: 16ch;
+    }
 
     /* Wpill stage — reserves vertical space for the float-out animation so
-       the next section doesn't reflow when the pill drifts up. */
+       the next section doesn't reflow when the pill drifts up. Tightened
+       from 130px → 110px because the float-out animation maxes at 110px
+       travel, and any extra stage space reads as dead air below the pill. */
     .wpill-stage {
-      margin-top: clamp(2rem, 5vh, 3.5rem);
-      min-height: 130px;
+      margin-top: clamp(1.75rem, 4vh, 3rem);
+      min-height: 110px;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -1462,9 +1482,9 @@
       font-family: 'Sora', sans-serif;
       transition: transform 0.3s;
     }
-    .chain-scale li:nth-child(1) { --chip-len: 0.8125rem; --chip-mult: 0.6875rem; }
-    .chain-scale li:nth-child(2) { --chip-len: 0.9375rem; --chip-mult: 0.75rem;   }
-    .chain-scale li:nth-child(3) { --chip-len: 1.125rem;  --chip-mult: 0.875rem;  padding: 0.55rem 0.9rem; }
+    .chain-scale li:nth-child(1) { --chip-len: 0.9375rem; --chip-mult: 0.75rem;   }
+    .chain-scale li:nth-child(2) { --chip-len: 1rem;      --chip-mult: 0.8125rem; }
+    .chain-scale li:nth-child(3) { --chip-len: 1.15rem;   --chip-mult: 0.9rem;    padding: 0.55rem 0.9rem; }
     .chain-scale li.chain-big    { --chip-len: 1.4rem;    --chip-mult: 1rem;      padding: 0.65rem 1.1rem; }
     .chain-scale .chain-len {
       font-weight: 800;
@@ -1502,9 +1522,22 @@
        material: no card backgrounds, no borders, icon is the only color.
        Gold divider between free (Daily Dig, Blitz) and Gold tiers. */
     .mode-strip {
-      padding: clamp(3rem, 6vh, 5rem) 0;
+      padding-block: var(--section-gap);
       max-width: 540px;
       margin: 0 auto;
+      position: relative;
+    }
+    /* Closing hairline below the Mode Strip — brackets the section and
+       visually hands off to the Final CTA. Mirrors the gold-tinted
+       hairline pattern used between the free and gold mode tiers. */
+    .mode-strip::after {
+      content: '';
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      bottom: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(240, 184, 64, 0.22), transparent);
     }
     .mode-strip-label {
       font-family: 'Sora', sans-serif;
@@ -1512,7 +1545,7 @@
       font-size: 0.6875rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: color-mix(in srgb, var(--text) 62%, transparent);
       text-align: center;
       margin: 0 0 1.75rem;
     }
@@ -1556,7 +1589,7 @@
       font-family: 'Sora', sans-serif;
       font-weight: 400;
       font-size: 0.8125rem;
-      color: var(--text-dim);
+      color: var(--text-body);
       text-align: right;
       line-height: 1.3;
     }
