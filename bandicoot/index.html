@@ -476,18 +476,21 @@
       .hero-grid > .hero-video {
         max-width: min(300px, 80vw);
       }
-      .store-badges { flex-direction: row; }
-      .store-badge { padding: 0.55rem 1rem; font-size: 0.75rem; }
+      .store-badge { padding: 0.5rem 0.85rem; font-size: 0.7rem; }
+      .store-badge svg { width: 16px; height: 16px; }
+      .store-badge-sub { font-size: 0.625rem; }
     }
 
-    /* ── Store Badges (demoted — placeholder until launch) ── */
+    /* ── Store Badges (placeholder until launch — both stores get
+       "Coming soon" copy and the badges are non-interactive). ── */
     .store-badges {
       display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
       justify-content: flex-start;
       gap: 0.625rem;
       margin-bottom: 0;
-      flex-wrap: wrap;
-      opacity: 0.75;
+      opacity: 0.7;
     }
     .store-badge {
       display: inline-flex;
@@ -495,20 +498,21 @@
       gap: 0.5rem;
       padding: 0.55rem 1.1rem;
       border-radius: 10px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       color: var(--text);
       text-decoration: none;
       font-family: 'Sora', sans-serif;
       font-weight: 600;
       font-size: 0.8125rem;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
+      flex-shrink: 1;
+      min-width: 0;
     }
-    .store-badges:hover { opacity: 1; }
-    .store-badge:hover {
-      background: rgba(184, 164, 254, 0.1);
-      border-color: rgba(184, 164, 254, 0.25);
-      transform: translateY(-1px);
+    /* Coming-soon state — visibly inert so visitors don't tap it
+       expecting a download. No hover, dimmer, no-allowed cursor. */
+    .store-badge.is-disabled {
+      cursor: not-allowed;
+      opacity: 0.85;
     }
     .store-badge svg { width: 18px; height: 18px; }
     .store-badge-sub {
@@ -1914,7 +1918,6 @@
 
     @media (max-width: 480px) {
       .signup-form { flex-direction: column; }
-      .store-badges { flex-direction: column; align-items: center; }
     }
   </style>
   <!-- TikTok Pixel Code Start -->
@@ -1944,7 +1947,7 @@
             <p class="hero-early-access-label">Early access</p>
             <h2 class="hero-early-access-headline">30 days of Gold, <em>free.</em></h2>
             <p class="hero-early-access-pitch">
-              Drop your email and we'll send your <em>Bandicoot Gold</em> code when we launch this summer.
+              Drop your email and we'll unlock your <em>Bandicoot Gold</em> when we launch this summer.
             </p>
             <form
               class="hero-early-access-form"
@@ -1960,21 +1963,21 @@
 
           <hr class="hero-rule hero-rule-secondary" aria-hidden="true">
 
-          <div class="store-badges">
-            <a href="#" class="store-badge" aria-label="Download on the App Store">
+          <div class="store-badges" aria-label="Coming soon to the App Store and Google Play">
+            <span class="store-badge is-disabled" role="img" aria-label="Coming soon to the App Store">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
               <div>
-                <span class="store-badge-sub">Download on the</span>
+                <span class="store-badge-sub">Coming soon to</span>
                 App Store
               </div>
-            </a>
-            <a href="#" class="store-badge" aria-label="Get it on Google Play">
+            </span>
+            <span class="store-badge is-disabled" role="img" aria-label="Coming soon to Google Play">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm2.302-3.516L6.864 2.858l10.937 6.333zM19.2 10.8 17.107 12 19.2 13.2a.5.5 0 0 0 0-.867L19.2 10.8z"/></svg>
               <div>
-                <span class="store-badge-sub">Get it on</span>
+                <span class="store-badge-sub">Coming soon to</span>
                 Google Play
               </div>
-            </a>
+            </span>
           </div>
         </div>
 
