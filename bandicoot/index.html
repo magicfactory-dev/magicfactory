@@ -291,6 +291,20 @@
       filter: brightness(1.05);
     }
 
+    /* Trust micro-copy under the hero form — same shape as .signup-fine
+       at the bottom of the page so the commitment ("one email per week")
+       and the Privacy Policy link are visible at both conversion points. */
+    .hero-early-access-fine {
+      font-size: 0.6875rem;
+      color: var(--text-dim);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+    .hero-early-access-fine a {
+      color: var(--text-dim);
+      text-decoration: underline;
+    }
+
     /* Hero video frame — tightly cropped board, no phone bezel. The video is
        a co-equal product shot next to the wordmark, not a thumbnail. The
        max-width scales with viewport so narrow desktops (1024px) don't crush
@@ -1959,6 +1973,7 @@
               <button type="submit">Keep me posted</button>
               <input type="hidden" value="1" name="embed">
             </form>
+            <p class="hero-early-access-fine">One email per week, max. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
           </div>
 
           <hr class="hero-rule hero-rule-secondary" aria-hidden="true">
@@ -2143,7 +2158,7 @@
         <button type="submit">Keep me posted</button>
         <input type="hidden" value="1" name="embed">
       </form>
-      <p class="signup-fine">One email per month, max. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
+      <p class="signup-fine">One email per week, max. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
     </section>
   </div>
 
