@@ -1929,12 +1929,16 @@
 
     /* Tablet/desktop: two-column row layout. Brand (logo + copyright)
        anchors to the left, legal links anchor to the right. The
-       max-width 1160px container matches the rest of the page. */
+       max-width 1160px container matches the rest of the page. The
+       columns bottom-align so the legal links share a baseline with
+       the copyright line — both are legal/policy content. The Magic
+       Factory wordmark hangs as an editorial flourish above that
+       baseline. */
     @media (min-width: 720px) {
       footer {
         flex-direction: row;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: flex-end;
         text-align: left;
         gap: 2.5rem;
       }
