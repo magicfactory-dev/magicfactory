@@ -64,96 +64,443 @@
       z-index: 1;
     }
 
-    /* ── Nav ── */
-    nav {
-      padding: 1.5rem;
-      animation: fadeUp 0.6s ease-out both;
-    }
-    nav a {
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    nav a:hover { color: var(--text-body); }
-
     /* ── Hero ── */
     .hero {
-      text-align: center;
-      padding: 4rem 0 3rem;
+      padding: 4rem 0 3.5rem;
       animation: fadeUp 0.6s ease-out 0.1s both;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding-left: max(1.5rem, calc(50vw - 580px));
+      padding-right: max(1.5rem, calc(50vw - 580px));
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 400px);
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: center;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+    .hero-text {
+      text-align: left;
     }
 
-    .hero-icon {
-      width: 96px;
-      height: 96px;
-      margin: 0 auto 2rem;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 8px 40px rgba(184,164,254,0.15), 0 2px 12px rgba(0,0,0,0.4);
+    /* Hero genre strip — "[─] A WORD-DIGGING GAME [─]" beneath the wordmark */
+    .hero-genre {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.85rem;
+      margin: 0 0 0;
     }
-    .hero-icon svg { display: block; width: 100%; height: 100%; }
+    .hero-tagline-text {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.8125rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: rgba(234, 231, 223, 0.42);
+    }
+    .hero-tagline-rule {
+      display: block;
+      width: 3rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(234, 231, 223, 0.2));
+    }
+    .hero-tagline-rule:last-child {
+      background: linear-gradient(90deg, rgba(234, 231, 223, 0.2), transparent);
+    }
+
+    /* Hero-icon is retired on desktop now that .hero-label handles brand
+       context. Markup kept for backwards compat with older code but display
+       is none at every breakpoint. */
+    .hero-icon {
+      display: none;
+    }
 
     .hero-title {
-      margin-bottom: 0.75rem;
+      margin: 0;
     }
 
     .logotype {
       display: block;
-      margin: 0 auto;
-      width: clamp(280px, 65vw, 380px);
+      width: clamp(220px, 32vw, 380px);
       height: auto;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Hero lede — small serif subhead directly under the wordmark. Quieter
+       than the offer headline below so the "30 days of Gold, free." line
+       still reads as the primary CTA. */
+    .hero-lede {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+      line-height: 1.25;
+      color: color-mix(in srgb, var(--text) 82%, transparent);
+      margin: 0 0 1.5rem;
+      letter-spacing: -0.005em;
+      max-width: 18ch;
+    }
+    .hero-lede em {
+      font-style: italic;
+      color: var(--text);
     }
 
     .hero-tagline {
       font-family: 'Young Serif', Georgia, serif;
       font-weight: 400;
-      font-size: clamp(1.25rem, 3vw, 1.5rem);
-      color: var(--violet);
-      margin-bottom: 1.5rem;
-      opacity: 0.9;
-      letter-spacing: -0.005em;
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      line-height: 1.2;
+      color: var(--text);
+      margin: 0 0 1.25rem;
+      letter-spacing: -0.01em;
+      max-width: 520px;
+    }
+    .hero-tagline em {
+      font-style: italic;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
     }
 
     .hero-desc {
-      font-size: 1.125rem;
-      line-height: 1.7;
+      font-size: clamp(1.0625rem, 1.25vw, 1.15rem);
+      line-height: 1.65;
       color: var(--text-body);
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
+      max-width: 480px;
+      margin: 0 0 2rem;
     }
 
-    /* ── Store Badges ── */
+
+    /* Decorative hairline — the one connective element between the pitch
+       (label, wordmark, tagline, description) and the commerce (season,
+       badges). Violet-to-gold gradient echoes the page's .divider. */
+    .hero-rule {
+      border: 0;
+      height: 1px;
+      width: 140px;
+      background: linear-gradient(90deg, rgba(184,164,254,0.5), rgba(240,184,64,0.4));
+      margin: 0 0 1.75rem;
+    }
+    .hero-rule-secondary {
+      width: 100px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.2), rgba(255,255,255,0.04));
+      margin: 2rem 0 1.5rem;
+    }
+
+    /* Hero early-access block — the page's primary conversion surface.
+       Label → headline → sub → form, matching the three-tier structure used
+       by the mid-page .inline-signup-card and main .signup. */
+    .hero-early-access {
+      margin: 2.75rem 0 0;
+      max-width: 460px;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .hero-early-access-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 0.65rem;
+    }
+    .hero-early-access-headline {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.35rem, 2vw, 1.75rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0 0 0.6rem;
+    }
+    .hero-early-access-headline em {
+      font-style: italic;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-early-access-pitch {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-body);
+      margin: 0 0 1.1rem;
+      max-width: 440px;
+    }
+    .hero-early-access-pitch em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 700;
+      /* Subtle gold underline tying the product name to the Subscribe button
+         and the label — reinforces "Bandicoot Gold" as the offer's center. */
+      background: linear-gradient(180deg, transparent 85%, rgba(240, 184, 64, 0.4) 85%);
+      padding: 0 0.15em;
+    }
+    .hero-early-access-form {
+      display: flex;
+      gap: 0.5rem;
+      max-width: 440px;
+    }
+    .hero-early-access-form input[type="email"] {
+      flex: 1;
+      min-width: 0;
+      padding: 0.7rem 0.9rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .hero-early-access-form input[type="email"]::placeholder {
+      color: var(--text-dim);
+    }
+    .hero-early-access-form input[type="email"]:focus {
+      border-color: rgba(240, 184, 64, 0.5);
+    }
+    .hero-early-access-form button {
+      padding: 0.7rem 1.25rem;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      color: #1a1405;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.8125rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, filter 0.15s;
+      box-shadow: 0 4px 14px -4px rgba(240, 184, 64, 0.5);
+    }
+    .hero-early-access-form button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    /* Hero video frame — tightly cropped board, no phone bezel. The video is
+       a co-equal product shot next to the wordmark, not a thumbnail. The
+       max-width scales with viewport so narrow desktops (1024px) don't crush
+       the text column. */
+    .hero-video {
+      position: relative;
+      width: 100%;
+      max-width: clamp(300px, 30vw, 400px);
+      aspect-ratio: var(--hero-video-aspect, 540 / 668);
+      margin: 0;
+      border-radius: 26px;
+      overflow: hidden;
+      background: #0a0b12;
+      box-shadow:
+        0 50px 120px rgba(0, 0, 0, 0.6),
+        0 18px 50px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .hero-video:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow:
+        0 60px 140px rgba(184, 164, 254, 0.22),
+        0 24px 70px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.11),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    }
+    .hero-video video,
+    .hero-video img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+    }
+    /* Subtle gradient overlay — depth and prevents the frame edges from looking
+       too hard against the page background. */
+    .hero-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 100%, transparent 40%, rgba(0, 0, 0, 0.25) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 20%);
+    }
+    /* Tap-to-unmute affordance — bottom-right, muted by default, persists across reloads via localStorage. */
+    .hero-unmute {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 999px;
+      background: rgba(12, 12, 18, 0.62);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255, 255, 255, 0.92);
+      cursor: pointer;
+      opacity: 0.85;
+      transition:
+        opacity 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+    .hero-unmute:hover,
+    .hero-unmute:focus-visible {
+      opacity: 1;
+      background: rgba(20, 20, 30, 0.82);
+      transform: scale(1.05);
+      outline: none;
+    }
+    .hero-unmute .hero-unmute-on {
+      display: none;
+    }
+    .hero-unmute[aria-pressed='true'] .hero-unmute-muted {
+      display: none;
+    }
+    .hero-unmute[aria-pressed='true'] .hero-unmute-on {
+      display: inline-block;
+    }
+
+    /* Hero stacks into a single column below 960px — there isn't enough
+       horizontal budget for two readable columns until the viewport can fit
+       a ~440px video + a ~420px text column + gap + padding. Below that,
+       the wordmark + tagline lead, the video follows, then description + CTA.
+       This applies to everything from 960px down to 360px with proportional
+       sizing adjustments. */
+    @media (max-width: 959px) {
+      .hero {
+        padding: clamp(2rem, 5vw, 3rem) 0;
+        /* Undo the full-bleed container-breakout — at stacked widths we want
+           the hero to sit within the normal container padding. */
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(1.25rem, 3vw, 2rem);
+        text-align: center;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .hero-text {
+        /* Let children flow as siblings so the video can interleave with
+           the text block (wordmark + tagline above, desc + badges below). */
+        display: contents;
+      }
+      .hero-grid > .hero-video {
+        order: 4;
+        margin: 0.25rem auto 0.5rem;
+        max-width: min(340px, 70vw);
+      }
+      .hero-title {
+        order: 1;
+        margin: 0;
+      }
+      .logotype {
+        margin: 0 auto;
+        width: clamp(240px, 60vw, 360px);
+      }
+      .hero-lede {
+        order: 2;
+        margin: 0.75rem auto 0.5rem;
+        text-align: center;
+        max-width: 20ch;
+      }
+      .hero-grid > .hero-video {
+        /* override earlier order: 4 — video sits between lede and early-access */
+        order: 3;
+      }
+      /* Mobile: drop the decorative gradient rule. It's 32px of vertical cost
+         with zero functional benefit at this width. Kept on desktop where it
+         bridges pitch-half and commerce-half of the left column. */
+      .hero-rule {
+        display: none;
+      }
+      .hero-early-access {
+        order: 5;
+        margin: 0 auto 1rem;
+        max-width: 380px;
+        text-align: center;
+      }
+      .hero-early-access-label { text-align: center; }
+      .hero-early-access-pitch {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-early-access-form {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero-rule-secondary {
+        order: 6;
+        margin: 1rem auto 1rem;
+      }
+      .store-badges {
+        order: 7;
+        justify-content: center;
+      }
+    }
+
+    /* Very narrow phones — tighten everything further */
+    @media (max-width: 480px) {
+      .hero { padding: 1.5rem 0; }
+      .hero-grid > .hero-video {
+        max-width: min(300px, 80vw);
+      }
+      .store-badges { flex-direction: row; }
+      .store-badge { padding: 0.55rem 1rem; font-size: 0.75rem; }
+    }
+
+    /* ── Store Badges (demoted — placeholder until launch) ── */
     .store-badges {
       display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+      justify-content: flex-start;
+      gap: 0.625rem;
+      margin-bottom: 0;
       flex-wrap: wrap;
+      opacity: 0.75;
     }
     .store-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
       color: var(--text);
       text-decoration: none;
       font-family: 'Sora', sans-serif;
       font-weight: 600;
-      font-size: 0.9375rem;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+      font-size: 0.8125rem;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s, opacity 0.2s;
     }
+    .store-badges:hover { opacity: 1; }
     .store-badge:hover {
-      background: rgba(184, 164, 254, 0.12);
-      border-color: rgba(184, 164, 254, 0.3);
+      background: rgba(184, 164, 254, 0.1);
+      border-color: rgba(184, 164, 254, 0.25);
       transform: translateY(-1px);
     }
-    .store-badge svg { width: 22px; height: 22px; }
+    .store-badge svg { width: 18px; height: 18px; }
     .store-badge-sub {
       font-size: 0.75rem;
       font-weight: 400;
@@ -187,61 +534,170 @@
       margin-bottom: 2rem;
     }
 
-    .modes {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .mode {
-      padding: 1.25rem 1.5rem;
-      border-radius: 14px;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.04);
-      border-left: 3px solid var(--mode-color, rgba(255,255,255,0.1));
-      transition: border-color 0.2s;
-    }
-    .mode:hover { border-left-color: var(--mode-color); }
-
-    .mode {
-      padding: 1.25rem 1.5rem;
-    }
-    .mode-header {
+    /* Mode group label — sits above each cluster */
+    .mode-group-label {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 0.75rem;
-      margin-bottom: 0.5rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0 0 1rem;
+    }
+    .mode-group-label::before,
+    .mode-group-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    }
+    .mode-group-label.free { color: var(--green); }
+    .mode-group-label.gold {
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 50%, #c8941a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 1px 1px rgba(180, 130, 20, 0.3));
+    }
+    .mode-group-label.gold::before,
+    .mode-group-label.gold::after {
+      background: linear-gradient(90deg, transparent, rgba(240, 184, 64, 0.3), transparent);
+    }
+    .mode-group-label .gold-diamond {
+      font-size: 0.55em;
+      transform: translateY(-1px);
+      line-height: 1;
+    }
+
+    /* Mode group — same treatment for free + gold tiers */
+    .modes-group {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .modes-group:last-of-type { margin-bottom: 0; }
+
+    .mode-card {
+      position: relative;
+      padding: 1.5rem 1.75rem;
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, var(--mode-tint, transparent), transparent 60%),
+        rgba(255,255,255,0.02);
+      border: 1px solid var(--mode-border, rgba(255,255,255,0.06));
+      overflow: hidden;
+      transition:
+        transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.4s,
+        box-shadow 0.4s;
+    }
+    .mode-card:has(.mode-premium) .mode-card-top {
+      padding-right: 4.5rem;
+    }
+    .mode-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--mode-color);
+      box-shadow: 0 16px 50px var(--mode-shadow, rgba(0,0,0,0.3));
+    }
+    .mode-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--mode-color);
+      border-radius: 18px 0 0 18px;
+    }
+
+    /* Tiny premium chip for gold-tier cards */
+    .mode-premium {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.625rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem 0.25rem 0.45rem;
+      border-radius: 100px;
+      background: rgba(240, 184, 64, 0.08);
+      border: 1px solid rgba(240, 184, 64, 0.25);
+      color: #f0b840;
+    }
+    .mode-premium svg {
+      width: 10px;
+      height: 10px;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mode-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .mode-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--mode-tint, rgba(255,255,255,0.05));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mode-color);
+    }
+    .mode-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .mode-info {
+      flex: 1;
+      min-width: 0;
     }
     .mode-name {
       font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
+      font-weight: 800;
+      font-size: 1.25rem;
       color: var(--mode-color);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+      letter-spacing: -0.01em;
     }
     .mode-goal {
-      display: inline-block;
       font-family: 'Sora', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.3rem 0.6rem;
-      border-radius: 100px;
-      background: rgba(255,255,255,0.04);
-      color: var(--mode-color);
-      border: 1px solid currentColor;
-      opacity: 0.85;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.005em;
     }
     .mode-desc {
-      font-size: 0.8125rem;
-      line-height: 1.55;
+      font-size: 0.9375rem;
+      line-height: 1.6;
       color: var(--text-body);
-      margin-bottom: 0.85rem;
+      margin-bottom: 1rem;
     }
     .mode-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
     .mode-badge {
       display: inline-flex;
@@ -250,9 +706,9 @@
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--text-dim);
-      padding: 0.25rem 0.55rem 0.25rem 0.45rem;
+      padding: 0.3rem 0.65rem 0.3rem 0.5rem;
       border-radius: 100px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.06);
     }
     .mode-badge svg {
@@ -264,53 +720,61 @@
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-    .mode-free {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      background: rgba(142,236,192,0.14);
-      color: var(--green);
-      margin-left: 0.5rem;
-      vertical-align: middle;
-    }
 
-    .mode:nth-child(1) { --mode-color: var(--violet); }
-    .mode:nth-child(2) { --mode-color: var(--pink); }
-    .mode:nth-child(3) { --mode-color: var(--green); }
-    .mode:nth-child(4) { --mode-color: var(--orange); }
-    .mode:nth-child(5) { --mode-color: var(--gold); }
-
-    .gold-note {
-      text-align: center;
-      font-size: 0.8125rem;
-      color: var(--text-dim);
-      margin-top: 1.5rem;
-      font-style: italic;
+    /* Mode color tokens */
+    .mode-daily {
+      --mode-color: var(--violet);
+      --mode-tint: rgba(184, 164, 254, 0.1);
+      --mode-border: rgba(184, 164, 254, 0.2);
+      --mode-shadow: rgba(184, 164, 254, 0.18);
     }
-    .gold-note strong {
-      color: var(--gold);
-      font-style: normal;
+    .mode-blitz {
+      --mode-color: var(--pink);
+      --mode-tint: rgba(251, 164, 184, 0.1);
+      --mode-border: rgba(251, 164, 184, 0.2);
+      --mode-shadow: rgba(251, 164, 184, 0.18);
+    }
+    .mode-flow {
+      --mode-color: var(--green);
+      --mode-tint: rgba(142, 236, 192, 0.1);
+      --mode-border: rgba(142, 236, 192, 0.2);
+      --mode-shadow: rgba(142, 236, 192, 0.18);
+    }
+    .mode-focus {
+      --mode-color: var(--orange);
+      --mode-tint: rgba(253, 196, 154, 0.1);
+      --mode-border: rgba(253, 196, 154, 0.2);
+      --mode-shadow: rgba(253, 196, 154, 0.18);
+    }
+    .mode-root {
+      --mode-color: var(--gold);
+      --mode-tint: rgba(253, 224, 122, 0.1);
+      --mode-border: rgba(253, 224, 122, 0.2);
+      --mode-shadow: rgba(253, 224, 122, 0.18);
     }
 
     /* ── Highlights ── */
 
     /* ── Editorial Moments ── */
     .moment {
-      padding: 5rem 0 4rem;
+      padding: 4rem 0;
       position: relative;
+      /* Break out of the 680px container — same pattern as .hero */
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding-left: max(1.5rem, calc(50vw - 580px));
+      padding-right: max(1.5rem, calc(50vw - 580px));
     }
 
     .moment-grid {
       display: grid;
-      gap: 2rem;
+      gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
+      max-width: 1160px;
+      margin: 0 auto;
     }
-    .moment-grid.image-right { grid-template-columns: 1fr auto; }
-    .moment-grid.image-left { grid-template-columns: auto 1fr; }
+    .moment-grid.image-right { grid-template-columns: minmax(0, 1fr) minmax(280px, 400px); }
+    .moment-grid.image-left  { grid-template-columns: minmax(280px, 400px) minmax(0, 1fr); }
     .moment-grid.image-left .moment-text { order: 2; }
     .moment-grid.image-left .moment-image { order: 1; }
 
@@ -345,7 +809,7 @@
       font-size: 1.0625rem;
       line-height: 1.65;
       color: var(--text-body);
-      max-width: 360px;
+      max-width: 420px;
     }
 
     .moment-fine {
@@ -527,6 +991,8 @@
         width: 180px;
       }
       .moment-copy { margin: 0 auto; }
+
+      /* (mobile <= 600px rules consolidated into the stacked-hero block below) */
     }
 
     /* ── Screenshots Peek ── */
@@ -595,174 +1061,197 @@
     }
 
     /* ── Achievements showcase ── */
-    .achievements {
-      padding: 4rem 0 3rem;
-      position: relative;
+    /* ── Achievement strip (inside the Compete section) ── */
+    .achievement-strip {
+      margin: 2.5rem auto 0;
+      max-width: 640px;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .achievements::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 30% 50%, rgba(253, 224, 122, 0.1), transparent 65%),
-        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(184, 164, 254, 0.08), transparent 65%);
-      pointer-events: none;
-      z-index: -1;
-      opacity: 0.7;
-    }
-    .achievements-intro {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
-    .achievements-intro p {
-      font-size: 1rem;
-      color: var(--text-body);
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .achievements-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.65rem;
-    }
-    .achievement {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 0.85rem 1rem;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.025);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-left: 3px solid var(--ach-color, var(--gold));
-    }
-    .achievement-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 0.875rem;
-      color: var(--text);
-      letter-spacing: -0.005em;
-    }
-    .achievement-desc {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      line-height: 1.45;
-    }
-    .achievements-more {
-      text-align: center;
-      margin-top: 1.5rem;
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      font-style: italic;
-    }
-    .achievements-more strong {
-      color: var(--gold);
-      font-style: normal;
-    }
-    @media (max-width: 480px) {
-      .achievements-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── Pricing callout ── */
-    .pricing-card {
-      max-width: 480px;
-      margin: 3rem auto 0;
-      padding: 1.5rem 1.75rem;
-      border-radius: 16px;
-      background:
-        linear-gradient(135deg, rgba(184, 164, 254, 0.08), rgba(253, 224, 122, 0.06));
-      border: 1px solid rgba(184, 164, 254, 0.2);
-      text-align: center;
-    }
-    .pricing-line {
+    .achievement-strip-label {
       font-family: 'Sora', sans-serif;
       font-weight: 800;
-      font-size: 1.375rem;
-      color: var(--text);
-      letter-spacing: -0.01em;
-      margin-bottom: 0.4rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0 0 1rem;
     }
-    .pricing-price {
-      background: linear-gradient(135deg, var(--gold), var(--orange));
+    .achievement-strip-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 0.75rem;
+      padding: 0;
+      margin: 0;
+    }
+    .achievement-strip-list li {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--text-body);
+    }
+    .achievement-strip-list .ach-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ach-color, var(--gold));
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--ach-color, var(--gold));
+    }
+    .achievement-strip-list .ach-more {
+      color: var(--text-dim);
+      background: transparent;
+      border-color: transparent;
+      font-style: italic;
+    }
+
+    /* ── Promise callout ── */
+    .promise {
+      padding: 3rem 0 2rem;
+    }
+    .promise-card {
+      position: relative;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 2rem 2rem 1.75rem;
+      border-radius: 20px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240, 184, 64, 0.1), transparent 70%),
+        linear-gradient(180deg, rgba(240, 184, 64, 0.04), transparent 60%),
+        rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(240, 184, 64, 0.24);
+      box-shadow:
+        inset 0 1px 0 rgba(252, 229, 136, 0.14),
+        0 30px 80px -40px rgba(240, 184, 64, 0.3);
+      text-align: center;
+      overflow: hidden;
+    }
+    .promise-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 12%; right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(252, 229, 136, 0.65), transparent);
+      pointer-events: none;
+    }
+    .promise-headline {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.625rem, 4.5vw, 2.125rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin: 0 0 0.65rem;
+    }
+    .promise-headline em {
+      font-style: italic;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    .pricing-detail {
+    .promise-detail {
+      font-family: 'Sora', sans-serif;
       font-size: 0.875rem;
-      color: var(--text-body);
-    }
-
-    /* ── Maker note ── */
-    .maker {
-      max-width: 600px;
-      margin: 5rem auto 3rem;
-      padding: 0 1.5rem;
-      text-align: center;
-    }
-    .maker-label {
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 0.8125rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--violet);
-      margin-bottom: 1.25rem;
-    }
-    .maker-quote {
-      font-family: 'Young Serif', Georgia, serif;
-      font-weight: 400;
-      font-size: clamp(1.25rem, 3vw, 1.5rem);
-      line-height: 1.5;
-      color: var(--text-body);
-      max-width: 540px;
-      margin: 0 auto 1.25rem;
-    }
-    .maker-quote::before { content: '"'; color: var(--violet); margin-right: 0.1em; }
-    .maker-quote::after { content: '"'; color: var(--violet); margin-left: 0.1em; }
-    .maker-sig {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text-dim);
+      letter-spacing: 0.01em;
+      margin: 0;
     }
-    .maker-sig strong { color: var(--text-body); font-weight: 700; }
 
-    /* ── Email Signup ── */
+    /* ── Main Email Signup (gold treatment, matches promise card family) ── */
     .signup {
-      padding: 3rem 0;
+      padding: 4rem 1.5rem 3.5rem;
       text-align: center;
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .signup::before {
+      content: '';
+      position: absolute;
+      inset: 1rem 0 1rem;
+      border-radius: 24px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240, 184, 64, 0.1), transparent 70%),
+        linear-gradient(180deg, rgba(240, 184, 64, 0.04), transparent 60%),
+        rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(240, 184, 64, 0.24);
+      box-shadow:
+        inset 0 1px 0 rgba(252, 229, 136, 0.14),
+        0 30px 80px -40px rgba(240, 184, 64, 0.3);
+      pointer-events: none;
+      z-index: -1;
     }
 
-    .signup h2 {
+    .signup-label {
       font-family: 'Sora', sans-serif;
       font-weight: 800;
-      font-size: 1.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 1rem;
+    }
+
+    .signup-headline {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.625rem, 4.5vw, 2.125rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
       color: var(--text);
-      margin-bottom: 0.5rem;
+      margin: 0 0 0.65rem;
+    }
+    .signup-headline em {
+      font-style: italic;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
     }
 
     .signup-sub {
-      font-size: 0.875rem;
-      color: var(--text-dim);
-      margin-bottom: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      color: var(--text-body);
+      margin: 0 0 1.5rem;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .signup-sub em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 600;
     }
 
     .signup-form {
       display: flex;
       gap: 0.5rem;
-      max-width: 400px;
+      max-width: 420px;
       margin: 0 auto;
     }
 
     .signup-form input[type="email"] {
       flex: 1;
-      padding: 0.75rem 1rem;
+      padding: 0.8rem 1rem;
       border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
       background: rgba(255,255,255,0.04);
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.875rem;
+      font-size: 0.9375rem;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -770,43 +1259,568 @@
       color: var(--text-dim);
     }
     .signup-form input[type="email"]:focus {
-      border-color: rgba(184,164,254,0.4);
+      border-color: rgba(240, 184, 64, 0.5);
     }
 
     .signup-form button {
-      padding: 0.75rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 10px;
       border: none;
-      background: rgba(184, 164, 254, 0.9);
-      color: #0e0f18;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      color: #1a1405;
       font-family: 'Sora', sans-serif;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.875rem;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
       white-space: nowrap;
+      box-shadow:
+        0 6px 20px -6px rgba(240, 184, 64, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
-    .signup-form button:hover { background: rgba(184, 164, 254, 1); }
+    .signup-form button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 10px 28px -6px rgba(240, 184, 64, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
 
     .signup-fine {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       color: var(--text-dim);
-      margin-top: 0.85rem;
+      margin-top: 1rem;
     }
     .signup-fine a {
       color: var(--text-dim);
       text-decoration: underline;
     }
 
+    /* ── Chain moment (The Chain — multiplier demo) ──
+       Single centered editorial column. The wpill sits at the bottom of the
+       section in normal flow and animates in / out via the IntersectionObserver
+       loop in the inline script below.  */
+    .chain-moment {
+      padding-block: clamp(3rem, 8vh, 6rem);
+    }
+    .chain-moment::before {
+      background:
+        radial-gradient(ellipse 70% 50% at 30% 50%, rgba(240, 184, 64, 0.1), transparent 65%),
+        radial-gradient(ellipse 50% 60% at 80% 50%, rgba(184, 164, 254, 0.08), transparent 65%);
+    }
+    .chain-col {
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .chain-col .moment-copy {
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .chain-col .chain-scale {
+      justify-content: center;
+    }
+
+    /* Wpill stage — reserves vertical space for the float-out animation so
+       the next section doesn't reflow when the pill drifts up. */
+    .wpill-stage {
+      margin-top: clamp(2rem, 5vh, 3.5rem);
+      min-height: 130px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    /* ── Single word pill ── */
+    .wpill {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      padding: 14px 22px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(74, 222, 128, 0.4);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(16px);
+      box-shadow:
+        0 0 20px rgba(74, 222, 128, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      font-family: 'Sora', sans-serif;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 1.375rem;
+      line-height: 1;
+      white-space: nowrap;
+      color: #ffffff;
+      text-shadow: 0 0 12px rgba(74, 222, 128, 0.35);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .wpill.wpill-complete {
+      border-color: rgba(74, 222, 128, 0.75);
+      box-shadow:
+        0 0 40px rgba(74, 222, 128, 0.35),
+        0 0 12px rgba(74, 222, 128, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .wpill-score {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      line-height: 1;
+      color: #fcd34d;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 10px rgba(252, 211, 77, 0.4);
+      margin-left: 12px;
+      min-width: 2ch;
+      transition: opacity 0.2s;
+    }
+
+    .wpill-score:empty { opacity: 0; }
+
+    .wpill-mult {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.8125rem;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.65);
+      font-variant-numeric: tabular-nums;
+      padding: 3px 7px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-left: 6px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .wpill-mult:empty { opacity: 0; transform: scale(0.8); }
+    .wpill-mult:not(:empty) { opacity: 1; transform: scale(1); }
+
+    @keyframes wpill-letter-pop {
+      0%   { opacity: 0; transform: scale(0.6) translateY(4px); }
+      60%  { opacity: 1; transform: scale(1.12) translateY(-1px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .wpill-letter {
+      display: inline-block;
+      animation: wpill-letter-pop 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    @keyframes wpill-score-tick {
+      0%   { transform: translateY(5px); opacity: 0; }
+      100% { transform: translateY(0);   opacity: 1; }
+    }
+
+    .wpill-score.ticking {
+      animation: wpill-score-tick 0.18s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+
+    /* Hide pill chrome while empty (between reset and first letter) */
+    .wpill:has(#wpill-letters:empty) {
+      border-color: transparent;
+      box-shadow: none;
+    }
+
+    /* Float-out animation — mirrors the in-game pillFloatOut keyframes from
+       GameHUD.svelte. Scaled down from 180px to 110px for the landing-page
+       section (keeps the pill inside the .wpill-stage reserved space). */
+    @keyframes pillFloatOut {
+      0%   { opacity: 1; transform: translateY(0); }
+      70%  { opacity: 1; transform: translateY(-80px); }
+      100% { opacity: 0; transform: translateY(-110px); }
+    }
+    .wpill.wpill-floating {
+      animation: pillFloatOut 1.4s ease-out both;
+      pointer-events: none;
+    }
+    /* Chain multiplier scale — size ramps left-to-right so the visitor's eye
+       travels the crescendo even before the wpill animation plays. Gold chip
+       at the end is the climax. */
+    .chain-scale {
+      list-style: none;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0;
+      margin: 1.75rem 0 0;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+    .chain-scale li {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      font-family: 'Sora', sans-serif;
+      transition: transform 0.3s;
+    }
+    .chain-scale li:nth-child(1) { --chip-len: 0.8125rem; --chip-mult: 0.6875rem; }
+    .chain-scale li:nth-child(2) { --chip-len: 0.9375rem; --chip-mult: 0.75rem;   }
+    .chain-scale li:nth-child(3) { --chip-len: 1.125rem;  --chip-mult: 0.875rem;  padding: 0.55rem 0.9rem; }
+    .chain-scale li.chain-big    { --chip-len: 1.4rem;    --chip-mult: 1rem;      padding: 0.65rem 1.1rem; }
+    .chain-scale .chain-len {
+      font-weight: 800;
+      font-size: var(--chip-len, 0.9375rem);
+      color: var(--text);
+      line-height: 1;
+    }
+    .chain-scale .chain-mult {
+      font-weight: 600;
+      font-size: var(--chip-mult, 0.75rem);
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+    .chain-scale .chain-big {
+      background: linear-gradient(180deg, rgba(240, 184, 64, 0.22), rgba(240, 184, 64, 0.06));
+      border-color: rgba(240, 184, 64, 0.5);
+      box-shadow:
+        0 0 24px rgba(240, 184, 64, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+    .chain-scale .chain-big .chain-len {
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .chain-scale .chain-big .chain-mult {
+      color: var(--gold);
+      font-weight: 800;
+    }
+
+    /* ── Mode Strip — compact 5-row reference list ──
+       Replaces the old .features + .mode-card layout. Low-weight reference
+       material: no card backgrounds, no borders, icon is the only color.
+       Gold divider between free (Daily Dig, Blitz) and Gold tiers. */
+    .mode-strip {
+      padding: clamp(3rem, 6vh, 5rem) 0;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .mode-strip-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      margin: 0 0 1.75rem;
+    }
+    .mode-strip-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .mode-row {
+      display: grid;
+      grid-template-columns: 36px auto 1fr;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.7rem 0.25rem;
+    }
+    .mode-row-icon {
+      width: 32px;
+      height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--mode-color);
+      flex-shrink: 0;
+    }
+    .mode-row-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .mode-row-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--text);
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+    }
+    .mode-row-desc {
+      font-family: 'Sora', sans-serif;
+      font-weight: 400;
+      font-size: 0.8125rem;
+      color: var(--text-dim);
+      text-align: right;
+      line-height: 1.3;
+    }
+
+    /* Mode color tokens (match the existing palette used on the old cards) */
+    .mode-row.mode-daily { --mode-color: var(--violet); }
+    .mode-row.mode-blitz { --mode-color: var(--pink); }
+    .mode-row.mode-flow  { --mode-color: var(--green); }
+    .mode-row.mode-focus { --mode-color: var(--orange); }
+    .mode-row.mode-root  { --mode-color: var(--gold); }
+
+    /* Gold divider between free and gold tiers */
+    .mode-divider {
+      position: relative;
+      margin: 0.75rem 0 0.5rem;
+      text-align: center;
+      pointer-events: none;
+    }
+    .mode-divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(240, 184, 64, 0.45), transparent);
+    }
+    /* The label is a solid-background wrapper so it occludes the hairline
+       cleanly. The gradient-clipped text lives in a nested span so it can
+       use background-clip: text without fighting the backdrop. */
+    .mode-divider-label {
+      position: relative;
+      display: inline-block;
+      padding: 0.15rem 0.75rem;
+      background: var(--bg, #0e0f18);
+    }
+    .mode-divider-text {
+      display: inline-block;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 50%, #c8941a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 1px 1px rgba(180, 130, 20, 0.3));
+    }
+
+    /* Narrow phones: stack name/desc vertically so long descriptions don't
+       collide with mode names on small viewports. */
+    @media (max-width: 480px) {
+      .mode-row {
+        grid-template-columns: 32px 1fr;
+        grid-template-rows: auto auto;
+        row-gap: 0.125rem;
+        column-gap: 0.75rem;
+      }
+      .mode-row-icon {
+        grid-row: 1 / 3;
+        align-self: center;
+      }
+      .mode-row-name,
+      .mode-row-desc {
+        grid-column: 2;
+        text-align: left;
+      }
+    }
+
+    /* ── Inline mid-page signup ── */
+    .inline-signup {
+      padding: 2rem 0;
+    }
+    .inline-signup-card {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 1.75rem 1.75rem;
+      border-radius: 18px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(240, 184, 64, 0.08), transparent 70%),
+        rgba(255, 255, 255, 0.015);
+      border: 1px solid rgba(240, 184, 64, 0.2);
+      box-shadow:
+        inset 0 1px 0 rgba(252, 229, 136, 0.1),
+        0 20px 60px -30px rgba(240, 184, 64, 0.25);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .inline-signup-label {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.6875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 0 0 0.35rem;
+    }
+    .inline-signup-headline {
+      font-family: 'Young Serif', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      line-height: 1.15;
+      color: var(--text);
+      margin: 0 0 0.4rem;
+    }
+    .inline-signup-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      margin: 0;
+      line-height: 1.5;
+    }
+    .inline-signup-sub em {
+      font-style: normal;
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .inline-signup-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-width: 220px;
+    }
+    .inline-signup-form input[type="email"] {
+      padding: 0.7rem 1rem;
+      border-radius: 9px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8125rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .inline-signup-form input[type="email"]:focus {
+      border-color: rgba(240, 184, 64, 0.5);
+    }
+    .inline-signup-form input[type="email"]::placeholder {
+      color: var(--text-dim);
+    }
+    .inline-signup-form button {
+      padding: 0.7rem 1.25rem;
+      border-radius: 9px;
+      border: none;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      color: #1a1405;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.15s, filter 0.15s;
+      box-shadow: 0 4px 14px -4px rgba(240, 184, 64, 0.5);
+    }
+    .inline-signup-form button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+    @media (max-width: 640px) {
+      .inline-signup-card {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1.25rem;
+        gap: 1rem;
+        text-align: center;
+      }
+      .inline-signup-form { min-width: 0; }
+    }
+
+    /* ── Floating CTA (fades in after hero leaves viewport) ── */
+    .floating-cta {
+      position: fixed;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.1rem 0.75rem 1.3rem;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #fce588 0%, #f0b840 60%, #c8941a 100%);
+      color: #1a1405;
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 0.8125rem;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      box-shadow:
+        0 10px 28px -6px rgba(240, 184, 64, 0.55),
+        0 4px 12px -2px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .floating-cta.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .floating-cta:hover {
+      filter: brightness(1.05);
+    }
+    .floating-cta svg { flex-shrink: 0; }
+    .floating-cta-close {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      margin-left: 0.3rem;
+      border: none;
+      border-radius: 50%;
+      background: rgba(26, 20, 5, 0.2);
+      color: #1a1405;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .floating-cta-close:hover {
+      background: rgba(26, 20, 5, 0.35);
+    }
+    @media (max-width: 480px) {
+      .floating-cta {
+        bottom: 0.75rem;
+        right: 0.75rem;
+        padding: 0.625rem 0.9rem 0.625rem 1.1rem;
+        font-size: 0.75rem;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .floating-cta { transition: opacity 0.2s ease; transform: none; }
+    }
+
     /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 3rem 1.5rem 2.5rem;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 4rem 1.5rem 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .footer-brand {
+      display: inline-block;
+      opacity: 0.55;
+      transition: opacity 0.3s ease;
+    }
+    .footer-brand:hover { opacity: 1; }
+    .footer-logotype {
+      display: block;
+      width: clamp(200px, 30vw, 280px);
+      height: auto;
     }
     footer small {
       color: var(--text-dim);
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
     }
     footer a {
       color: var(--text-dim);
@@ -815,11 +1829,12 @@
     }
     footer a:hover { color: var(--text-body); }
     .footer-links {
-      margin-bottom: 1rem;
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1.75rem;
       font-size: 0.8125rem;
+      font-family: 'Sora', sans-serif;
+      font-weight: 600;
     }
 
     /* ── Animations ── */
@@ -882,151 +1897,113 @@
   <!-- TikTok Pixel Code End -->
 </head>
 <body>
-  <nav>
-    <a href="/">&larr; Magic Factory</a>
-  </nav>
-
   <div class="container">
     <!-- Hero -->
     <section class="hero">
-      <div class="hero-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <rect width="512" height="512" rx="88" fill="#12131f"/>
-          <rect x="30" y="30" width="140" height="140" rx="22" fill="#fba4b8"/>
-          <rect x="186" y="30" width="140" height="140" rx="22" fill="#fdc49a"/>
-          <rect x="342" y="30" width="140" height="140" rx="22" fill="#fde07a"/>
-          <rect x="30" y="186" width="140" height="140" rx="22" fill="#dca4f4"/>
-          <rect x="186" y="186" width="140" height="140" rx="22" fill="#c8ccd6"/>
-          <rect x="342" y="186" width="140" height="140" rx="22" fill="#8eecc0"/>
-          <rect x="30" y="342" width="140" height="140" rx="22" fill="#b8a4fe"/>
-          <rect x="186" y="342" width="140" height="140" rx="22" fill="#96cffe"/>
-          <rect x="342" y="342" width="140" height="140" rx="22" fill="#fba4b8"/>
-        </svg>
-      </div>
+      <div class="hero-grid">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <img src="logo-animated.svg" alt="Bandicoot" class="logotype">
+          </h1>
+          <p class="hero-lede">The word-digging game with <em>gravity.</em></p>
 
-      <h1 class="hero-title">
-        <img src="logo-animated.svg" alt="Bandicoot" class="logotype">
-      </h1>
-      <p class="hero-tagline">A word-digging puzzle game</p>
-      <p class="hero-desc">
-        Connect letters on a 6&times;6 grid to spell words and clear tiles.
-        When tiles clear, the ones above drop down, changing the board with every word you play.
-        Longer words earn massive multipliers. Beautiful dark-mode design. No ads.
-      </p>
-
-      <div class="store-badges">
-        <a href="#" class="store-badge" aria-label="Download on the App Store">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
-          <div>
-            <span class="store-badge-sub">Download on the</span>
-            App Store
+          <div class="hero-early-access">
+            <p class="hero-early-access-label">Early access</p>
+            <h2 class="hero-early-access-headline">30 days of Gold, <em>free.</em></h2>
+            <p class="hero-early-access-pitch">
+              Drop your email and we'll send your <em>Bandicoot Gold</em> code when we launch this summer.
+            </p>
+            <form
+              class="hero-early-access-form"
+              action="https://buttondown.com/api/emails/embed-subscribe/magicfactory"
+              method="post"
+              target="popupwindow"
+            >
+              <input type="email" name="email" placeholder="your@email.com" aria-label="Email" required>
+              <button type="submit">Keep me posted</button>
+              <input type="hidden" value="1" name="embed">
+            </form>
           </div>
-        </a>
-        <a href="#" class="store-badge" aria-label="Get it on Google Play">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm2.302-3.516L6.864 2.858l10.937 6.333zM19.2 10.8 17.107 12 19.2 13.2a.5.5 0 0 0 0-.867L19.2 10.8z"/></svg>
-          <div>
-            <span class="store-badge-sub">Get it on</span>
-            Google Play
-          </div>
-        </a>
-      </div>
 
-      <p style="font-size: 0.875rem; color: var(--text-dim); font-weight: 500;">Coming soon to iOS and Android</p>
+          <hr class="hero-rule hero-rule-secondary" aria-hidden="true">
+
+          <div class="store-badges">
+            <a href="#" class="store-badge" aria-label="Download on the App Store">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
+              <div>
+                <span class="store-badge-sub">Download on the</span>
+                App Store
+              </div>
+            </a>
+            <a href="#" class="store-badge" aria-label="Get it on Google Play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm2.302-3.516L6.864 2.858l10.937 6.333zM19.2 10.8 17.107 12 19.2 13.2a.5.5 0 0 0 0-.867L19.2 10.8z"/></svg>
+              <div>
+                <span class="store-badge-sub">Get it on</span>
+                Google Play
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-video" aria-label="Bandicoot gameplay preview">
+          <video
+            id="hero-fumble-video"
+            src="screenshots/hero-fumble.mp4"
+            poster="screenshots/hero-fumble-poster.jpg"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="Bandicoot gameplay loop — a distracted player fumbles on an obvious word"
+          ></video>
+          <button
+            type="button"
+            class="hero-unmute"
+            aria-label="Unmute gameplay video"
+            aria-pressed="false"
+          >
+            <svg class="hero-unmute-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="22" y1="9" x2="16" y2="15"></line>
+              <line x1="16" y1="9" x2="22" y2="15"></line>
+            </svg>
+            <svg class="hero-unmute-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
     </section>
 
     <div class="divider"></div>
 
-    <!-- Editorial moment 1: The Cascade -->
-    <section class="moment reveal">
-      <div class="moment-grid image-right">
-        <div class="moment-text">
-          <p class="moment-label">The cascade</p>
-          <h2 class="moment-headline">Connect. Clear. Cascade.</h2>
-          <p class="moment-copy">
-            Connect letters on a 6&times;6 grid. Spell a word, watch tiles vanish, watch the
-            ones above drop down. Find a long word and watch your score explode.
-          </p>
-        </div>
-        <div class="moment-image">
-          <div class="moment-phone moment-phone-tilt-left">
-            <video
-              src="screenshots/gameplay.mp4"
-              poster="screenshots/home-dark.png"
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              aria-label="Bandicoot gameplay loop showing words being played and tiles clearing"
-            ></video>
+    <!-- Editorial moment 1: The Chain (multiplier mechanic) -->
+    <section class="moment chain-moment reveal">
+      <div class="chain-col">
+        <p class="moment-label">The chain</p>
+        <h2 class="moment-headline moment-headline-serif">Longer words. <em>Bigger scores.</em></h2>
+        <p class="moment-copy">
+          Clear a word, the tiles above drop in. Five-letter words earn
+          &times; 2. Six &times; 3. Seven &times; 5. Eight &times; 8.
+          Chain long enough and the whole board reshuffles.
+        </p>
+        <ul class="chain-scale" aria-label="Chain multiplier scale">
+          <li><span class="chain-len">5</span><span class="chain-mult">&times; 2</span></li>
+          <li><span class="chain-len">6</span><span class="chain-mult">&times; 3</span></li>
+          <li><span class="chain-len">7</span><span class="chain-mult">&times; 5</span></li>
+          <li class="chain-big"><span class="chain-len">8</span><span class="chain-mult">&times; 8</span></li>
+        </ul>
+        <div class="wpill-stage" aria-hidden="true">
+          <div class="wpill" id="wpill">
+            <span class="wpill-word" id="wpill-letters"></span>
+            <span class="wpill-score" id="wpill-score"></span>
+            <span class="wpill-mult" id="wpill-mult"></span>
           </div>
         </div>
       </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Features -->
-    <section class="features reveal">
-      <p class="section-label">Five Ways to Play</p>
-      <div class="modes">
-        <div class="mode">
-          <div class="mode-header">
-            <div class="mode-name">Daily Dig <span class="mode-free">Free</span></div>
-            <span class="mode-goal">Build your streak</span>
-          </div>
-          <div class="mode-desc">A new puzzle every day. Same board for everyone. Climb the global leaderboard.</div>
-          <div class="mode-badges">
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>No timer</span>
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><line x1="12" y1="5" x2="12" y2="19"/></svg>One try per day</span>
-          </div>
-        </div>
-        <div class="mode">
-          <div class="mode-header">
-            <div class="mode-name">Blitz <span class="mode-free">Free</span></div>
-            <span class="mode-goal">Beat the clock</span>
-          </div>
-          <div class="mode-desc">Race the clock. Two minutes. Tiles refill. Earn bonus time for longer words.</div>
-          <div class="mode-badges">
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><path d="M10 2h4M12 14v-4M19 8a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>2 min timer</span>
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 1 1 18 5.36L23 10"/></svg>Tiles refill</span>
-          </div>
-        </div>
-        <div class="mode">
-          <div class="mode-header">
-            <div class="mode-name">Flow</div>
-            <span class="mode-goal">Find your zen</span>
-          </div>
-          <div class="mode-desc">Endless and relaxed. No timer, tiles refill, free shuffle. Just dig.</div>
-          <div class="mode-badges">
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.739-8z"/></svg>Endless</span>
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15A9 9 0 1 1 18 5.36L23 10"/></svg>Tiles refill</span>
-          </div>
-        </div>
-        <div class="mode">
-          <div class="mode-header">
-            <div class="mode-name">Focus</div>
-            <span class="mode-goal">High score</span>
-          </div>
-          <div class="mode-desc">Clear the board before time runs out. No refills. Every word counts.</div>
-          <div class="mode-badges">
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><path d="M10 2h4M12 14v-4M19 8a7 7 0 1 1-14 0 7 7 0 0 1 14 0z"/></svg>2 min timer</span>
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>No refills</span>
-          </div>
-        </div>
-        <div class="mode">
-          <div class="mode-header">
-            <div class="mode-name">Root</div>
-            <span class="mode-goal">Clear the board</span>
-          </div>
-          <div class="mode-desc">No timer. No pressure. Clear all 36 tiles for a perfect game.</div>
-          <div class="mode-badges">
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>No timer</span>
-            <span class="mode-badge"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>No refills</span>
-          </div>
-        </div>
-      </div>
-      <p class="gold-note">Daily Dig and Blitz are free forever. <strong>Bandicoot Gold</strong> unlocks the rest.</p>
     </section>
 
     <div class="divider"></div>
@@ -1064,126 +2041,96 @@
 
     <div class="divider"></div>
 
-    <!-- Achievements showcase -->
-    <section class="achievements reveal">
-      <p class="section-label">26 Achievements to Unlock</p>
-      <div class="achievements-intro">
-        <p>From the obvious to the absurd. Some you'll earn the first day. Others will take months.</p>
-      </div>
-      <div class="achievements-grid">
-        <div class="achievement" style="--ach-color: var(--gold)">
-          <div class="achievement-name">Golden Nugget</div>
-          <div class="achievement-desc">Clear all 36 tiles for a perfect game</div>
-        </div>
-        <div class="achievement" style="--ach-color: var(--violet)">
-          <div class="achievement-name">Burrowed In</div>
-          <div class="achievement-desc">Build a 30-day Daily Dig streak</div>
-        </div>
-        <div class="achievement" style="--ach-color: var(--pink)">
-          <div class="achievement-name">Mega Strike</div>
-          <div class="achievement-desc">Score 200+ points on a single word</div>
-        </div>
-        <div class="achievement" style="--ach-color: var(--blue)">
-          <div class="achievement-name">Night Shift</div>
-          <div class="achievement-desc">Complete a game between midnight and 4am</div>
-        </div>
-        <div class="achievement" style="--ach-color: var(--green)">
-          <div class="achievement-name">Word Hoard</div>
-          <div class="achievement-desc">Find 100 words across all games</div>
-        </div>
-        <div class="achievement" style="--ach-color: var(--orange)">
-          <div class="achievement-name">Ooh That Smell</div>
-          <div class="achievement-desc">An obscure little easter egg</div>
-        </div>
-      </div>
-      <p class="achievements-more">+ <strong>20 more</strong> waiting to be unlocked</p>
-
-      <!-- Pricing callout right after achievements -->
-      <div class="pricing-card">
-        <p class="pricing-line">Free to play. <span class="pricing-price">$2.99</span> unlocks all modes.</p>
-        <p class="pricing-detail">One-time purchase. No subscription. No ads.</p>
-      </div>
+    <!-- Mode Strip — compact reference list of the five game modes -->
+    <section class="mode-strip reveal">
+      <p class="mode-strip-label">Five ways to play</p>
+      <ul class="mode-strip-list">
+        <li class="mode-row mode-daily">
+          <span class="mode-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </span>
+          <span class="mode-row-name">Daily Dig</span>
+          <span class="mode-row-desc">A new puzzle, every day</span>
+        </li>
+        <li class="mode-row mode-blitz">
+          <span class="mode-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </span>
+          <span class="mode-row-name">Blitz</span>
+          <span class="mode-row-desc">Two minutes, beat the clock</span>
+        </li>
+        <li class="mode-divider" aria-hidden="true">
+          <span class="mode-divider-label"><span class="mode-divider-text">Bandicoot Gold</span></span>
+        </li>
+        <li class="mode-row mode-flow">
+          <span class="mode-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.585 0-4.585 8 0 8 5.606 0 7.644-8 12.739-8z"/></svg>
+          </span>
+          <span class="mode-row-name">Flow</span>
+          <span class="mode-row-desc">No timer, just dig</span>
+        </li>
+        <li class="mode-row mode-focus">
+          <span class="mode-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </span>
+          <span class="mode-row-name">Focus</span>
+          <span class="mode-row-desc">High score, no refills</span>
+        </li>
+        <li class="mode-row mode-root">
+          <span class="mode-row-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          <span class="mode-row-name">Root</span>
+          <span class="mode-row-desc">Every tile counts</span>
+        </li>
+      </ul>
     </section>
 
     <div class="divider"></div>
 
-    <!-- Editorial moment 3: Word Definition -->
-    <section class="moment green-glow reveal">
-      <div class="moment-grid image-right">
-        <div class="moment-text">
-          <p class="moment-label">Every word, a discovery</p>
-          <h2 class="moment-headline">Learn as you play.</h2>
-          <p class="moment-copy">
-            Tap a word you've found to see its definition. Build your vocabulary
-            without trying. Every game teaches you something.
-          </p>
-          <p class="moment-fine">
-            Definitions provided by <a href="https://www.wiktionary.org/" target="_blank" rel="noopener">Wiktionary</a>.
-            Some words in our dictionary may not be found in theirs.
-          </p>
-        </div>
-        <div class="moment-image">
-          <div class="modal-card modal-card-tilt">
-            <img src="screenshots/word-definition-modal.png" alt="Word definition modal showing the entry for SCRATCH">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Editorial moment 4: Leaderboard close-up -->
-    <section class="moment pink-glow reveal">
-      <div style="text-align: center;">
-        <p class="moment-label">Compete daily</p>
-        <h2 class="moment-headline">Same puzzle.<br>Same day.<br>Global leaderboard.</h2>
-        <p class="moment-copy" style="margin: 0 auto;">
-          Everyone gets the same Daily Dig. Compare your score with players around the world.
-          Climb the ranks. Defend your streak.
-        </p>
-        <div class="leaderboard-closeup">
-          <img src="screenshots/leaderboard-crop.png" alt="Bandicoot leaderboard with top 10 players">
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Maker note -->
-    <section class="maker reveal">
-      <p class="maker-label">From the maker</p>
-      <p class="maker-quote">
-        I built Bandicoot because I wanted a word game I could play every day
-        without ads, IAP traps, or pay-to-win nonsense. Just letters, words,
-        and the satisfying click of tiles falling into place.
+    <!-- Main Email Signup (gold treatment) -->
+    <section class="signup reveal" id="signup">
+      <p class="signup-label">Early access</p>
+      <h2 class="signup-headline">30 days of Gold, <em>on the house.</em></h2>
+      <p class="signup-sub">
+        Sign up now and sign into the game at launch with the same email to
+        unlock <em>Bandicoot Gold</em> for 30 days. Every mode, every assist,
+        free for you to try.
       </p>
-      <p class="maker-sig"><strong>Jeremy</strong> — Magic Factory, Boston</p>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- Email Signup -->
-    <section class="signup reveal">
-      <h2>Stay in the loop</h2>
-      <p class="signup-sub">Get updates on new features and game modes. No spam, ever.</p>
       <form
         class="signup-form"
         action="https://buttondown.com/api/emails/embed-subscribe/magicfactory"
         method="post"
         target="popupwindow"
       >
-        <input type="email" name="email" placeholder="you@example.com" required>
-        <button type="submit">Subscribe</button>
+        <input type="email" name="email" placeholder="your@email.com" aria-label="Email" required>
+        <button type="submit">Keep me posted</button>
+        <input type="hidden" value="1" name="embed">
       </form>
-      <p class="signup-fine">We respect your inbox. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
+      <p class="signup-fine">One email per month, max. Unsubscribe anytime. <a href="/bandicoot/privacy/">Privacy Policy</a></p>
     </section>
   </div>
 
+  <!-- Floating CTA — fades in after the hero leaves the viewport -->
+  <a href="#signup" class="floating-cta" id="floating-cta" aria-hidden="true" tabindex="-1">
+    <span class="floating-cta-text">30 days of Gold, free</span>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M5 12h14M13 5l7 7-7 7"></path>
+    </svg>
+    <button type="button" class="floating-cta-close" aria-label="Dismiss">
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"></path>
+      </svg>
+    </button>
+  </a>
+
   <footer>
+    <a href="/" class="footer-brand" aria-label="Magic Factory">
+      <img src="../logotype-white.svg" alt="Magic Factory" class="footer-logotype">
+    </a>
     <div class="footer-links">
       <a href="/bandicoot/privacy/">Privacy Policy</a>
       <a href="/bandicoot/terms/">Terms of Use</a>
-      <a href="/">Magic Factory</a>
     </div>
     <small>&copy; 2026 Magic Factory. Boston, MA.</small>
   </footer>
@@ -1219,6 +2166,198 @@
       document.querySelectorAll('.reveal, .reveal-stagger').forEach(function (el) {
         observer.observe(el);
       });
+    })();
+
+    // ── Chain section word pill loop (BRO → BROWSERS) ──
+    // Cycles a 6-word prefix chain demonstrating the multiplier ramp:
+    //   BRO       +5   (no mult — length 3)
+    //   BROW      +14  (1.5×)
+    //   BROWS     +20  (2×)
+    //   BROWSE    +33  (3×)
+    //   BROWSER   +60  (5×)
+    //   BROWSERS  +104 (8×)
+    // Scores are from the game's real Scrabble-value * length-multiplier
+    // formula (see src/game/engine/Scorer.ts in the game repo).
+    (function () {
+      var pillEl    = document.getElementById('wpill');
+      var lettersEl = document.getElementById('wpill-letters');
+      var scoreEl   = document.getElementById('wpill-score');
+      var multEl    = document.getElementById('wpill-mult');
+      if (!pillEl || !lettersEl || !scoreEl || !multEl) return;
+
+      var SEQUENCE = [
+        { word: 'BRO',      score: 5,   mult: ''     },
+        { word: 'BROW',     score: 14,  mult: '1.5×' },
+        { word: 'BROWS',    score: 20,  mult: '2×'   },
+        { word: 'BROWSE',   score: 33,  mult: '3×'   },
+        { word: 'BROWSER',  score: 60,  mult: '5×'   },
+        { word: 'BROWSERS', score: 104, mult: '8×'   },
+      ];
+
+      var BUILD_PER_LETTER_MS = 120;
+      var HOLD_MS = 950;
+      var FLOAT_OUT_MS = 1400; // matches @keyframes pillFloatOut duration
+      var GAP_MS = 300;
+
+      var timer = null;
+      var idx = 0;
+      var stopped = false;
+
+      function wait(ms) {
+        return new Promise(function (resolve) {
+          timer = setTimeout(resolve, ms);
+        });
+      }
+
+      async function runBeat(beat) {
+        if (stopped) return;
+        // Reset pill to empty state
+        pillEl.classList.remove('wpill-floating', 'wpill-complete');
+        lettersEl.textContent = '';
+        scoreEl.textContent = '';
+        multEl.textContent = '';
+        // Force reflow so the animation restart is clean
+        void pillEl.offsetWidth;
+        await wait(40);
+
+        // Build the word letter-by-letter
+        for (var i = 1; i <= beat.word.length; i++) {
+          if (stopped) return;
+          lettersEl.textContent = beat.word.slice(0, i);
+          await wait(BUILD_PER_LETTER_MS);
+        }
+
+        // Pop score + multiplier, glow up
+        pillEl.classList.add('wpill-complete');
+        scoreEl.textContent = '+' + beat.score;
+        multEl.textContent = beat.mult;
+        // Re-trigger the score tick animation
+        scoreEl.classList.remove('ticking');
+        void scoreEl.offsetWidth;
+        scoreEl.classList.add('ticking');
+        await wait(HOLD_MS);
+
+        // Float up + fade out
+        if (stopped) return;
+        pillEl.classList.add('wpill-floating');
+        await wait(FLOAT_OUT_MS);
+      }
+
+      async function loop() {
+        while (!stopped) {
+          var beat = SEQUENCE[idx];
+          await runBeat(beat);
+          if (stopped) return;
+          await wait(GAP_MS);
+          idx = (idx + 1) % SEQUENCE.length;
+        }
+      }
+
+      // Start when chain section scrolls into view
+      var started = false;
+      var chainSection = document.querySelector('.chain-moment');
+      if (chainSection && typeof IntersectionObserver !== 'undefined') {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting && !started) {
+              started = true;
+              setTimeout(loop, 400);
+              io.disconnect();
+            }
+          });
+        }, { threshold: 0.3 });
+        io.observe(chainSection);
+      } else {
+        setTimeout(loop, 400);
+      }
+    })();
+
+    // Hero fumble video: muted by default (browser autoplay policy), tap the
+    // speaker affordance to unmute. Unmute choice persists across reloads via
+    // localStorage so returning visitors don't have to re-enable every time.
+    (function () {
+      var video = document.getElementById('hero-fumble-video');
+      var button = document.querySelector('.hero-unmute');
+      if (!video || !button) return;
+      var KEY = 'bandicoot_hero_unmuted';
+      function setMuted(muted) {
+        video.muted = muted;
+        button.setAttribute('aria-pressed', muted ? 'false' : 'true');
+        button.setAttribute('aria-label', muted ? 'Unmute gameplay video' : 'Mute gameplay video');
+      }
+      try {
+        if (window.localStorage && localStorage.getItem(KEY) === '1') {
+          // Returning visitor opted in — still start muted (autoplay requirement)
+          // then unmute on first user gesture anywhere on the page.
+          setMuted(true);
+          var unmuteOnGesture = function () {
+            setMuted(false);
+            video.play().catch(function () {});
+            window.removeEventListener('pointerdown', unmuteOnGesture);
+            window.removeEventListener('keydown', unmuteOnGesture);
+          };
+          window.addEventListener('pointerdown', unmuteOnGesture, { once: true });
+          window.addEventListener('keydown', unmuteOnGesture, { once: true });
+        }
+      } catch (e) {
+        // localStorage blocked — fall through to default muted
+      }
+      button.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var nowMuted = !video.muted;
+        setMuted(nowMuted);
+        video.play().catch(function () {});
+        try {
+          if (window.localStorage) {
+            if (nowMuted) localStorage.removeItem(KEY);
+            else localStorage.setItem(KEY, '1');
+          }
+        } catch (err) {}
+      });
+    })();
+
+    // Floating CTA: fades in after the hero leaves the viewport. Dismissible,
+    // dismissal persists across reloads via localStorage. Clicking the body
+    // navigates to #signup; the × button dismisses without navigating.
+    (function () {
+      var cta = document.getElementById('floating-cta');
+      var hero = document.querySelector('.hero');
+      var closeBtn = cta && cta.querySelector('.floating-cta-close');
+      if (!cta || !hero) return;
+      var DISMISS_KEY = 'bandicoot_cta_dismissed';
+      try {
+        if (window.localStorage && localStorage.getItem(DISMISS_KEY) === '1') {
+          return; // user previously dismissed — don't ever show
+        }
+      } catch (e) {}
+      if (typeof IntersectionObserver === 'undefined') return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            cta.classList.remove('is-visible');
+            cta.setAttribute('aria-hidden', 'true');
+            cta.setAttribute('tabindex', '-1');
+          } else {
+            cta.classList.add('is-visible');
+            cta.setAttribute('aria-hidden', 'false');
+            cta.setAttribute('tabindex', '0');
+          }
+        });
+      }, { threshold: 0.1 });
+      io.observe(hero);
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          cta.classList.remove('is-visible');
+          cta.setAttribute('aria-hidden', 'true');
+          cta.setAttribute('tabindex', '-1');
+          io.disconnect();
+          try {
+            if (window.localStorage) localStorage.setItem(DISMISS_KEY, '1');
+          } catch (err) {}
+        });
+      }
     })();
   </script>
 </body>
