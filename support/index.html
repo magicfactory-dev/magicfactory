@@ -293,6 +293,7 @@
       }
     }
   </style>
+  <script src="/analytics.js"></script>
 </head>
 <body>
   <main>
@@ -342,5 +343,22 @@
       <p>Prefer email? <a href="mailto:support@magicfactory.dev">support@magicfactory.dev</a></p>
     </div>
   </main>
+
+  <script>
+    // Fire a PostHog `support_submitted` event when the form is submitted.
+    // Formspree navigates the page on submit (no popup target), so we use
+    // the Beacon transport which the browser flushes during unload.
+    (function () {
+      var form = document.querySelector('.contact form');
+      if (!form) return;
+      form.addEventListener('submit', function () {
+        try {
+          if (typeof posthog === 'undefined') return;
+          var product = (form.querySelector('[name="product"]') || {}).value || '';
+          posthog.capture('support_submitted', { product: product }, { transport: 'sendBeacon' });
+        } catch (err) { /* let the submit proceed regardless */ }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -228,6 +228,15 @@
       color: var(--accent-green);
     }
 
+    .card code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.8125rem;
+      background: rgba(255,255,255,0.05);
+      padding: 0.05em 0.4em;
+      border-radius: 4px;
+      color: var(--text-primary);
+    }
+
     /* --- check list (what we don't do) --- */
     .check-list {
       list-style: none;
@@ -309,6 +318,7 @@
       }
     }
   </style>
+  <script src="/analytics.js"></script>
 </head>
 <body>
   <main>
@@ -328,14 +338,14 @@
     <div class="divider"></div>
 
     <section>
-      <h2>What We Don't Collect</h2>
+      <h2>What We Don't Do</h2>
       <ul class="check-list">
-        <li>No tracking</li>
         <li>No advertising</li>
-        <li>No analytics</li>
-        <li>No cookies</li>
-        <li>No location data</li>
         <li>No data sales</li>
+        <li>No cross-site tracking</li>
+        <li>No location data</li>
+        <li>No fingerprinting</li>
+        <li>We respect Do Not Track</li>
       </ul>
     </section>
 
@@ -343,8 +353,12 @@
       <h2>Data We Do Collect</h2>
       <dl class="card-group">
         <div class="card">
-          <dt>Contact form</dt>
-          <dd>If you reach out via our contact form, we receive your name, email, and message. This is processed by Formspree and delivered to us by email. We use it only to respond to you.</dd>
+          <dt>Support &amp; contact form</dt>
+          <dd>If you reach out via our <a href="/support/">support form</a> or contact form, we receive your name, email, and message. This is processed by Formspree and delivered to us by email. We use it only to respond to you.</dd>
+        </div>
+        <div class="card">
+          <dt>Analytics (PostHog)</dt>
+          <dd>We use PostHog to count visits and understand which pages people read. We capture page views and a small number of intent events (e.g. when an email subscribe form is submitted). We do not capture form contents, mouse movements, or session recordings. Analytics requests are routed through our own subdomain (<code>t.magicfactory.dev</code>) for reliability, not to circumvent ad-blockers' intent. Browsers that send the <em>Do Not Track</em> signal are not tracked.</dd>
         </div>
       </dl>
     </section>
@@ -354,9 +368,22 @@
       <dl class="card-group">
         <div class="card">
           <dt>Formspree</dt>
-          <dd>Processes contact form submissions. <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
+          <dd>Processes contact and support form submissions. <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
+          <dt>PostHog</dt>
+          <dd>Privacy-friendly product analytics. Events are stored on PostHog Cloud (US region). <a href="https://posthog.com/privacy" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
+          <dt>Cloudflare</dt>
+          <dd>Provides DNS and the reverse proxy at <code>t.magicfactory.dev</code> used to route analytics requests. <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">Privacy Policy</a></dd>
+        </div>
+        <div class="card">
+          <dt>GitHub Pages</dt>
+          <dd>Hosts this website. GitHub may log standard request data (e.g. IP address, user agent) to operate the service. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">Privacy Policy</a></dd>
         </div>
       </dl>
+      <p style="margin-top:1rem;">Individual products may use additional third-party services — see their dedicated privacy policies (e.g. <a href="/bandicoot/privacy/" style="color:var(--accent-blue);text-decoration:none;">Bandicoot</a>).</p>
     </section>
 
     <section>
@@ -371,7 +398,7 @@
 
     <div class="contact-line">
       <p>Questions? <a href="mailto:support@magicfactory.dev">support@magicfactory.dev</a></p>
-      <p class="updated">Updated April 3, 2026</p>
+      <p class="updated">Updated April 26, 2026</p>
     </div>
   </main>
 </body>
