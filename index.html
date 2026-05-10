@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Magic Factory — People and machines can do magical things.</title>
   <meta name="description" content="People and machines can do magical things. Magic Factory makes games — Bandicoot, a word-digging puzzle now on iOS and Android, and Juncture, a daily word puzzle in beta on the web.">
+
+  <!-- Smart App Banner (iOS Safari) — surfaces Bandicoot in the App Store -->
+  <meta name="apple-itunes-app" content="app-id=6763123118, app-argument=https://magicfactory.dev/bandicoot/">
+  <!-- Android Chrome native install prompt -->
+  <meta name="google-play-app" content="app-id=dev.magicfactory.bandicoot">
+
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%2312131f'/><rect x='6' y='6' width='27' height='27' rx='4' fill='%23fba4b8'/><rect x='37' y='6' width='27' height='27' rx='4' fill='%23fdc49a'/><rect x='67' y='6' width='27' height='27' rx='4' fill='%23fde07a'/><rect x='6' y='37' width='27' height='27' rx='4' fill='%23dca4f4'/><rect x='37' y='37' width='27' height='27' rx='4' fill='%23c8ccd6'/><rect x='67' y='37' width='27' height='27' rx='4' fill='%238eecc0'/><rect x='6' y='67' width='27' height='27' rx='4' fill='%23b8a4fe'/><rect x='37' y='67' width='27' height='27' rx='4' fill='%2396cffe'/><rect x='67' y='67' width='27' height='27' rx='4' fill='%23fba4b8'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,6 +244,51 @@
 
     .product-link:hover span {
       transform: translateX(3px);
+    }
+
+    .product-stores {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .product-store {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.8125rem;
+      line-height: 1;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .product-store:hover,
+    .product-store:focus-visible {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-1px);
+    }
+
+    .product-store svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .product-store-sub {
+      display: block;
+      font-size: 0.625rem;
+      font-weight: 400;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.15rem;
     }
 
     .product + .divider + .product {
@@ -496,6 +547,22 @@
 
       <p class="product-label">The word-digging game with gravity.</p>
       <p>Connect letters, spell words, and dig through the board. Longer words score big. Five ways to play — from strategic to speed to zen. Daily puzzles, leaderboards, and streaks to keep you coming back. <strong>Out now on iOS and Android.</strong></p>
+      <div class="product-stores" aria-label="Download Bandicoot">
+        <a class="product-store" href="https://apps.apple.com/app/bandicoot/id6763123118" aria-label="Download Bandicoot on the App Store">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
+          <div>
+            <span class="product-store-sub">Download on the</span>
+            App Store
+          </div>
+        </a>
+        <a class="product-store" href="https://play.google.com/store/apps/details?id=dev.magicfactory.bandicoot" aria-label="Get Bandicoot on Google Play">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.609 1.814 13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893 2.302 2.302-10.937 6.333zm2.302-3.516L6.864 2.858l10.937 6.333zM19.2 10.8 17.107 12 19.2 13.2a.5.5 0 0 0 0-.867L19.2 10.8z"/></svg>
+          <div>
+            <span class="product-store-sub">Get it on</span>
+            Google Play
+          </div>
+        </a>
+      </div>
       <a href="/bandicoot" class="product-link">Learn more <span>&rarr;</span></a>
     </div>
 
