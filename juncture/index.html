@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Juncture — A daily word puzzle | Magic Factory</title>
-  <meta name="description" content="Juncture is a daily word puzzle where every word lives a double life. Nine words on a 3×3 grid, each fitting both its row and its column. Now in beta.">
+  <meta name="description" content="Juncture is a daily word puzzle where every word lives a double life. Nine words on a 3×3 grid, each fitting both its row and its column. Coming soon.">
   <link rel="canonical" href="https://magicfactory.dev/juncture/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Magic Factory">
   <meta property="og:title" content="Juncture — A daily word puzzle">
-  <meta property="og:description" content="Every word lives a double life. Nine words, 3×3, each fitting both its row and its column. Now in beta.">
+  <meta property="og:description" content="Every word lives a double life. Nine words, 3×3, each fitting both its row and its column. Coming soon.">
   <meta property="og:url" content="https://magicfactory.dev/juncture/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Juncture — A daily word puzzle">
-  <meta name="twitter:description" content="Every word lives a double life. Nine words, 3×3, each fitting both its row and its column. Now in beta.">
+  <meta name="twitter:description" content="Every word lives a double life. Nine words, 3×3, each fitting both its row and its column. Coming soon.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23faf9f6'/><text x='14' y='74' font-family='DM Serif Display, Georgia, serif' font-size='72' fill='%231a1a1a'>J</text><rect x='62' y='34' width='22' height='6' fill='%231a1a1a'/><rect x='70' y='26' width='6' height='22' fill='%231a1a1a'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -192,8 +192,8 @@
       animation: fadeIn 0.6s ease-out 0.15s both;
     }
 
-    /* Beta + Play row — replaces the old "Coming Spring 2026" eyebrow.
-       The chip carries the status; the button carries the action. */
+    /* Status row — carries the "Coming Soon" chip. The Play CTA was
+       removed while the game is offline / out of puzzles. */
     .beta-row {
       display: flex;
       align-items: center;
@@ -221,31 +221,6 @@
       height: 6px;
       border-radius: 50%;
       background: #b4391e;
-    }
-    .play-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--bg);
-      background: var(--ink);
-      border: 2px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--shadow);
-      padding: 0.6rem 1rem;
-      text-decoration: none;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .play-cta:hover,
-    .play-cta:focus-visible {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--shadow);
-    }
-    .play-cta svg {
-      width: 14px;
-      height: 14px;
     }
 
     /* --- rule --- */
@@ -404,11 +379,7 @@
     <p class="tagline">Every word lives a double life</p>
 
     <div class="beta-row">
-      <span class="beta-chip"><span class="beta-chip-dot" aria-hidden="true"></span>Beta</span>
-      <a class="play-cta" href="https://juncture.magicfactory.dev">
-        Play Juncture
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </a>
+      <span class="beta-chip"><span class="beta-chip-dot" aria-hidden="true"></span>Coming Soon</span>
     </div>
 
     <div class="rule"></div>
